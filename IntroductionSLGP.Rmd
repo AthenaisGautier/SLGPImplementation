@@ -4,7 +4,7 @@ author: "Athénaïs Gautier"
 output:
   # html_document:
   bookdown::pdf_document2 :
-    keep_tex: true
+    #keep_tex: true
     toc: false
     number_sections: true
     citation_package: natbib
@@ -106,7 +106,8 @@ modelPrior <- slgp(medv~age, # Use a formula to specify predictors VS response
                                       # So 0.15 is 15% of the range of values
                                       sigma2=1), 
                    # Will be re-selected with sigmaEstimationMethod
-                   sigmaEstimationMethod = "heuristic", # Set to heuristic for numerical stability                 
+                   sigmaEstimationMethod = "heuristic", 
+                   # Set to heuristic for numerical stability                 
                    predictorsLower= c(range_x[1]),
                    predictorsUpper= c(range_x[2]),
                    responseRange= range_response,
@@ -145,7 +146,8 @@ scale_factor <- 200
 ggplot()  +
   labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        x = "Median value of owner-occupied homes [MEDV, k$]",
-       title = "Samples from the SLGP Prior for the pdfs of MEDV at AGE, visualised across slices") +
+       title = "Samples from the SLGP Prior for the pdfs of MEDV at AGE, 
+       visualised across slices") +
   theme_bw()+
   geom_ribbon(data=predPrior,
               mapping=aes(x=medv, ymax=scale_factor*value+age, 
@@ -155,7 +157,9 @@ ggplot()  +
   #            mapping=aes(x = medv, y = age), alpha = 0.5, color = "navy")+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
+                                            title = "Indexing variable: 
+                                            Proportion of owner-occupied units built 
+                                            prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -216,7 +220,8 @@ ggplot(mapping=aes(x = medv)) +
   facet_wrap(~ category, scales = "free_y", nrow=1) +
   labs(x = "Median value of owner-occupied homes [k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, with width 5\nversus draws from a SLGP prior") +
+       title = "Histogram of median value at bins centered at several 'age' values, 
+       with width 5\nversus draws from a SLGP prior") +
   theme_bw()+
   theme(legend.position="bottom",
         legend.direction = "horizontal",
@@ -234,7 +239,7 @@ Since this is a prior distribution, it does not yet incorporate information from
 
 To explore how different covariance structures influence the SLGP prior, we compare three additional kernel choices:
 
-* Exponential Kernel: A special case of the Matérn class (ν = 1/2) that results in less smooth realizations.
+* Exponential Kernel: A special case of the Matérn class ($\nu$ = 1/2) that results in less smooth realizations.
 * Matérn 3/2 Kernel: A compromise between flexibility and smoothness.
 * Gaussian Kernel: The limiting case, leading to infinitely differentiable functions.
 
@@ -324,7 +329,9 @@ ggplot()  +
               col="grey", alpha=0.9)+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
+                                            title = "Indexing variable: 
+                                            Proportion of owner-occupied units built 
+                                            prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -408,7 +415,8 @@ ggplot()  +
               col="grey", alpha=0.9)+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
+                                            title = "Indexing variable: 
+                                            Proportion of owner-occupied units built prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -552,7 +560,9 @@ ggplot()  +
              mapping=aes(x = medv, y = age), alpha = 0.5, color = "navy")+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
+                                            title = "Indexing variable: 
+                                            Proportion of owner-occupied units built 
+                                            prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -708,14 +718,14 @@ This method allows us to fully explore the posterior distribution by drawing sam
 
 As for MAP and Laplace, we could have use all three implementations: training from scratch, re-training a model or manually specifying components. We go for the second again.
 
-```{r SLGPfitting3, eval=FALSE}
+```{r SLGPfitting3}
 modelMCMC  <- retrainSLGP(SLGPmodel=modelPrior, 
                           newdata = df, 
                           method="MCMC",
                           opts = list(stan_chains=2, stan_iter=1000))
 ```
 MCMC provides a rich representation of uncertainty in the estimated density. Instead of showing a single estimate, we compare multiple posterior draws against histogram data, similarly to what we did for the Laplace approximation.
-```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H", eval=FALSE}
+```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
 # Define the three selected values
 pred <- predictSLGP_newNode(SLGPmodel=modelMCMC,
                             newNodes = dfGrid)
@@ -768,8 +778,9 @@ In order to quantify the prediction error for different configurations, we defin
 $$
 d_{IH}^2(f , f' ) = \frac{1}{2}\int_D \int_T \left( \sqrt{f(\mathbf{v}, u)} - \sqrt{f'(\mathbf{v}, u))}  \right)^2 \,du \,d\mathbf{v}
 $$
+We first generate 10 different samples from the reference field.
 
-```{r eval=FALSE}
+```{r}
 len_list <- c(0.01, 0.05, 0.15, 0.5)
 n_list <- c(5, 25, 100, 
             250, 500, 1000, 
@@ -802,6 +813,8 @@ for(i in seq(max(rep_list))){
 }
 
 ```
+
+And then run the density estimations with different parameters on these samples.
 
 ```{r eval=FALSE}
 
@@ -845,7 +858,7 @@ for(i in seq(max(rep_list))){
                          "_len_", len*100, "%",
                          "_rep_", i, ".Rdata")
         modelCurrent@hyperparams$lengthscale <- c(len, len)
-        if(!file.exists(title3)){
+        if(!file.exists(title3) | i==1 & nFreq==100){
           dH_list <- rep(NA, length(n_list))
           for(j in seq_along(n_list)){
             cat(".")
@@ -858,8 +871,18 @@ for(i in seq(max(rep_list))){
             dH <- sqrt(mean((sqrt(predRef$pdf_1)-sqrt(predTemp$pdf_1))^2)*
                          diff(range_x)*diff(range_response))
             dH_list[j]  <- dH
+            if(i==1 & nFreq==100 & n==100){
+              mod1 <- modelCurrent
+            }
+            if(i==1 & nFreq==100 & n==10000){
+              mod2 <- modelCurrent
+            }
           }
-          save(dH_list, file=title3)
+          if(i==1 & nFreq==100 & n==100){
+            save(dH_list, mod1, mod2, file=title3)
+          }else{
+            save(dH_list, file=title3)
+          }
           cat("Did ", title3, "\n")
           gc()
         }
@@ -872,7 +895,7 @@ for(i in seq(max(rep_list))){
 
 ```
 
-
+we concatenate the results and are ready to visualise them.
 ```{r}
 df_res <- data.frame()
 
@@ -900,7 +923,9 @@ for(i in seq(max(rep_list))){
 }
 ```
 
-```{r}
+When the lengthscale is too small, the estimation fails to generalize effectively, leading to poor density reconstruction.
+
+```{r PlotTooSmallLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is too small", fig.fullwidth=TRUE, fig.height=3, fig.width=8, fig.align='center',fig.pos="H"}
 df_res_plot <- df_res %>%
   group_by(matpar, nFreq, len, n)%>%
   summarise(meandH=mean(dH),
@@ -940,8 +965,12 @@ df_res_plot %>%
   xlab("Size of the training sample")+
   ylab("Integrated square Hellinger distance")
 ```
+The model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
 
-```{r}
+for other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
+
+
+```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=8, fig.width=8, fig.align='center',fig.pos="H"}
 
 df_res_plot %>%
   filter(as.numeric(len) !=1 ) %>%
