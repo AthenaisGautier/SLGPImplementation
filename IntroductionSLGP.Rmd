@@ -715,7 +715,7 @@ modelMCMC  <- retrainSLGP(SLGPmodel=modelPrior,
                           opts = list(stan_chains=2, stan_iter=1000))
 ```
 MCMC provides a rich representation of uncertainty in the estimated density. Instead of showing a single estimate, we compare multiple posterior draws against histogram data, similarly to what we did for the Laplace approximation.
-```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H", eval=FALSE}
 # Define the three selected values
 pred <- predictSLGP_newNode(SLGPmodel=modelMCMC,
                             newNodes = dfGrid)
