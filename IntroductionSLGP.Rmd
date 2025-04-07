@@ -4,7 +4,7 @@ author: "Athénaïs Gautier"
 output:
   # html_document:
   bookdown::pdf_document2 :
-    #keep_tex: true
+    keep_tex: true
     toc: false
     number_sections: true
     citation_package: natbib
@@ -878,7 +878,7 @@ for(i in seq(max(rep_list))){
               mod2 <- modelCurrent
             }
           }
-          if(i==1 & nFreq==100 & n==100){
+          if(i==1 & nFreq==100){
             save(dH_list, mod1, mod2, file=title3)
           }else{
             save(dH_list, file=title3)
@@ -963,14 +963,17 @@ df_res_plot %>%
   scale_x_log10()+
   scale_y_log10()+
   xlab("Size of the training sample")+
-  ylab("Integrated square Hellinger distance")
+  ylab("Integrated square Hellinger distance")+
+  labs(fill = "Number of frequencies",
+       col= "Number of frequencies")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
 ```
 The model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
 
 for other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
 
 
-```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=8, fig.width=8, fig.align='center',fig.pos="H"}
+```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
 
 df_res_plot %>%
   filter(as.numeric(len) !=1 ) %>%
@@ -983,7 +986,10 @@ df_res_plot %>%
   scale_x_log10()+
   scale_y_log10()+
   xlab("Size of the training sample")+
-  ylab("Integrated square Hellinger distance")
+  ylab("Integrated square Hellinger distance")+
+  labs(fill = "Number of frequencies",
+       col= "Number of frequencies")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
 ```
 
 
