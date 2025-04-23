@@ -968,9 +968,9 @@ df_res_plot %>%
        col= "Number of frequencies")+
   theme(legend.direction = "horizontal", legend.position = "bottom")
 ```
-The model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
+Indeed, with such low lengthscale, the model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
 
-for other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
+For other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
 
 
 ```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
