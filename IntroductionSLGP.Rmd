@@ -2,12 +2,12 @@
 title: "Introduction to SLGP Package"
 author: "Athénaïs Gautier"
 output:
-  # html_document:
-  bookdown::pdf_document2 :
-    keep_tex: true
-    toc: false
-    number_sections: true
-    citation_package: natbib
+  html_document:
+  # bookdown::pdf_document2 :
+  #   keep_tex: true
+  #   toc: false
+  #   number_sections: true
+  #   citation_package: natbib
 header-includes:
   - \usepackage{float}
 bibliography: references.bib
