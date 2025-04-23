@@ -342,7 +342,7 @@ ggplot()  +
   facet_grid(.~Kernel)
 ggsave(paste0("./Figures/ribbonsPriorOthers",  ".pdf"), width=10, height=5)
 ```
-```{r include=FALSE}
+```{r SLGPplottingOtherPrior2, include=FALSE}
 
 modelPrior2@coefficients <- coef/5/10
 modelPrior3@coefficients <- coef/5/10
@@ -993,3 +993,24 @@ df_res_plot %>%
 ```
 
 
+
+```{r PlotOtherLen2, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big. (Same results, different scale)", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
+
+df_res_plot %>%
+  filter(as.numeric(len) !=1 ) %>%
+  filter(n >=100) %>%
+  ggplot(aes(x=n, group=nFreq, 
+             col=as.factor(nFreq), fill=as.factor(nFreq)))+
+  geom_ribbon(mapping=aes(ymin = q10, ymax=q90), alpha=0.1)+
+  geom_line(mapping= aes(y=meandH))+
+  theme_bw()+
+  facet_grid(len~matpar)+
+  coord_cartesian(ylim=c(min(df_res$dH), 2))+
+  scale_x_log10()+
+  scale_y_log10()+
+  xlab("Size of the training sample")+
+  ylab("Integrated square Hellinger distance")+
+  labs(fill = "Number of frequencies",
+       col= "Number of frequencies")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
+```
