@@ -185,7 +185,7 @@ We represent the data to visualise the relationship between \texttt{medv} and \t
        \AttributeTok{title =} \StringTok{"Histogram of median housing values by AGE group"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \FunctionTok{ggarrange}\NormalTok{(scatter\_plot, hist\_plot, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{,}
           \AttributeTok{widths =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.7}\NormalTok{))}
 \end{Highlighting}
@@ -378,7 +378,7 @@ To assess how well the SLGP prior aligns with the actual data distribution, we c
         \AttributeTok{legend.direction =} \StringTok{"horizontal"}\NormalTok{,}
         \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -394,7 +394,7 @@ To assess how well the SLGP prior aligns with the actual data distribution, we c
 \begin{Shaded}
 \begin{Highlighting}[]
 
-\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histPrior"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histPrior"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -760,7 +760,7 @@ The figure reveals how the SLGP captures the structure in the estimated conditio
         \AttributeTok{legend.direction =} \StringTok{"horizontal"}\NormalTok{,}
         \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -776,7 +776,7 @@ The figure reveals how the SLGP captures the structure in the estimated conditio
 \begin{Shaded}
 \begin{Highlighting}[]
 
-\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histMAP"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histMAP"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -888,7 +888,7 @@ The following figure displays the resulting posterior landscapes.
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{fill=}\StringTok{"log Posterior"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
         \AttributeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Trained on 1/4 of dataset, evaluated on the rest."}\NormalTok{)}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Trained on 25\% of dataset, evaluated on remaining 75\%"}\NormalTok{)}
 
 \FunctionTok{library}\NormalTok{(ggpubr)}
 
@@ -904,6 +904,12 @@ The following figure displays the resulting posterior landscapes.
 
 \caption{Posterior log-density (up to a constant) over the lengthscale grid (age, medv), under two training strategies. Left: trained and evaluated on the full dataset. Right trained on 25\% of the data, evaluated on the remaining 75\%. The red dot indicates the optimal lengthscales in each setting.}\label{fig:optimlandscape}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/optimLandscape"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 We observe that:
 
@@ -950,8 +956,8 @@ Now, for a qualitative intepretation, we fit and compare SLGP models with three 
                          \AttributeTok{sigmaEstimationMethod=}\StringTok{"heuristic"}\NormalTok{)}
 \FunctionTok{gc}\NormalTok{()}
 \CommentTok{\#\textgreater{}           used  (Mb) gc trigger  (Mb) max used  (Mb)}
-\CommentTok{\#\textgreater{} Ncells 2281950 121.9    4691755 250.6  4691755 250.6}
-\CommentTok{\#\textgreater{} Vcells 6766005  51.7   23662044 180.6 28201788 215.2}
+\CommentTok{\#\textgreater{} Ncells 2282447 121.9    4705327 251.3  4705327 251.3}
+\CommentTok{\#\textgreater{} Vcells 6770059  51.7   23665932 180.6 28209902 215.3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1014,6 +1020,13 @@ This results in the following fitted densities:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/lengthscaleRibbons"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }
+       \AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{dfGrid }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{expand.grid}\NormalTok{(}\FunctionTok{seq}\NormalTok{(range\_x[}\DecValTok{1}\NormalTok{], range\_x[}\DecValTok{2}\NormalTok{], }\DecValTok{5}\NormalTok{), }
                                  \FunctionTok{seq}\NormalTok{(range\_response[}\DecValTok{1}\NormalTok{], range\_response[}\DecValTok{2}\NormalTok{],, }\DecValTok{101}\NormalTok{)))}
 \FunctionTok{colnames}\NormalTok{(dfGrid) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"medv"}\NormalTok{)}
@@ -1038,7 +1051,7 @@ This results in the following fitted densities:
 \NormalTok{pred }\OtherTok{\textless{}{-}}\NormalTok{ pred}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"medv"}\NormalTok{, }\StringTok{"Len"}\NormalTok{))}
 \NormalTok{pred}\SpecialCharTok{$}\NormalTok{category }\OtherTok{\textless{}{-}}\FunctionTok{ifelse}\NormalTok{(pred}\SpecialCharTok{$}\NormalTok{age}\SpecialCharTok{==}\NormalTok{selected\_values[}\DecValTok{1}\NormalTok{], names[}\DecValTok{1}\NormalTok{],}
-                          \FunctionTok{ifelse}\NormalTok{(pred}\SpecialCharTok{$}\NormalTok{age}\SpecialCharTok{==}\NormalTok{selected\_values[}\DecValTok{2}\NormalTok{], names[}\DecValTok{2}\NormalTok{], names[}\DecValTok{3}\NormalTok{]))}
+                       \FunctionTok{ifelse}\NormalTok{(pred}\SpecialCharTok{$}\NormalTok{age}\SpecialCharTok{==}\NormalTok{selected\_values[}\DecValTok{2}\NormalTok{], names[}\DecValTok{2}\NormalTok{], names[}\DecValTok{3}\NormalTok{]))}
 
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ medv)) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{(df\_filtered,}
@@ -1058,7 +1071,7 @@ This results in the following fitted densities:
         \AttributeTok{legend.direction =} \StringTok{"horizontal"}\NormalTok{,}
         \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1070,6 +1083,12 @@ This results in the following fitted densities:
 
 \caption{Comparison of fitted densities under different lengthscale settings}\label{fig:plotRibbonsLen2}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/lengthscaleHist"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 We observe that when the lengthscale is too big, while the model captures the general support of the distribution, it fails to capture finer details, such as multi-modalities in certain distributions. This limitation likely arises from using a large lengthscale, which oversmooths small-scale variations.
 On the opposite using too small a length scale restricts the model's spatial aggregation, limiting the reach of spatial information to a very local scope.
@@ -1149,10 +1168,10 @@ Unlike MAP estimation, which provides only a point estimate, the Laplace approxi
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ category, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Median value of owner{-}occupied homes [k$]"}\NormalTok{, }
        \AttributeTok{y =} \StringTok{"Probability density"}\NormalTok{, }
-       \AttributeTok{title =} \StringTok{"Histogram of median value at bins centered at several \textquotesingle{}age\textquotesingle{} values, with width 5}\SpecialCharTok{\textbackslash{}n}\StringTok{versus SLGP draws from a laplace approximation (black curves) and average (red curve)"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{title =} \StringTok{"Histogram of median value at bins centered at several \textquotesingle{}age\textquotesingle{} values, with width 5}\SpecialCharTok{\textbackslash{}n}\StringTok{versus SLGP draws from a Laplace approximation (black curves) and average (red curve)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1165,6 +1184,12 @@ Unlike MAP estimation, which provides only a point estimate, the Laplace approxi
 \caption{Predictive probability density (and draws from a Laplace approximation) of medv at age, seen over 3 slices.}\label{fig:SLGPLaplaceplot}
 \end{figure}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histLap"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \subsection{MCMC estimate}\label{mcmc-estimate}
 
 This method allows us to fully explore the posterior distribution by drawing samples from it. Unlike MAP or Laplace approximation, which provide a single point estimate or a Gaussian approximation, MCMC enables exact Bayesian inference of the underlying density field, given the observed data. The main drawback of this approach being its higher computational cost
@@ -1173,16 +1198,10 @@ As for MAP and Laplace, we could have used all three implementations: training f
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(}\StringTok{"modelMCMC.Rdata"}\NormalTok{))\{}
-\NormalTok{  modelMCMC  }\OtherTok{\textless{}{-}} \FunctionTok{retrainSLGP}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelPrior, }
-                            \AttributeTok{newdata =}\NormalTok{ df, }
-                            \AttributeTok{method=}\StringTok{"MCMC"}\NormalTok{,}
-                            \AttributeTok{opts =} \FunctionTok{list}\NormalTok{(}\AttributeTok{stan\_chains=}\DecValTok{2}\NormalTok{, }\AttributeTok{stan\_iter=}\DecValTok{1000}\NormalTok{))}
-  \FunctionTok{save}\NormalTok{(modelMCMC, }\AttributeTok{file=}\StringTok{"modelMCMC.Rdata"}\NormalTok{)}
-  
-\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
-  \FunctionTok{load}\NormalTok{(}\StringTok{"modelMCMC.Rdata"}\NormalTok{)}
-\NormalTok{\}}
+\NormalTok{modelMCMC  }\OtherTok{\textless{}{-}} \FunctionTok{retrainSLGP}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelPrior, }
+                          \AttributeTok{newdata =}\NormalTok{ df, }
+                          \AttributeTok{method=}\StringTok{"MCMC"}\NormalTok{,}
+                          \AttributeTok{opts =} \FunctionTok{list}\NormalTok{(}\AttributeTok{stan\_chains=}\DecValTok{2}\NormalTok{, }\AttributeTok{stan\_iter=}\DecValTok{1000}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1217,7 +1236,7 @@ MCMC provides a rich representation of uncertainty in the estimated density. Ins
        \AttributeTok{title =} \StringTok{"Histogram of median value at bins centered at several \textquotesingle{}age\textquotesingle{} values, with width 5}\SpecialCharTok{\textbackslash{}n}\StringTok{versus SLGP draws from a MCMC (black curves) and average (red curve)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
-                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1229,6 +1248,12 @@ MCMC provides a rich representation of uncertainty in the estimated density. Ins
 
 \caption{Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.}\label{fig:SLGPMCMCplot}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histMCMC"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \section{By-products of the estimation}\label{by-products-of-the-estimation}
 
@@ -1245,19 +1270,22 @@ Importantly, when using probabilistic inference schemes like Laplace approximati
 \NormalTok{predMean }\OtherTok{\textless{}{-}} \FunctionTok{predictSLGP\_moments}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelMCMC,}
                                 \AttributeTok{newNodes =}\NormalTok{ dfX, }
                                 \AttributeTok{power=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{),}
-                                \AttributeTok{centered=}\ConstantTok{FALSE}\NormalTok{)}
+                                \AttributeTok{centered=}\ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# Uncentered moments}
+\CommentTok{\# For the mean}
 \NormalTok{predVar }\OtherTok{\textless{}{-}} \FunctionTok{predictSLGP\_moments}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelMCMC,}
                                \AttributeTok{newNodes =}\NormalTok{ dfX, }
                                \AttributeTok{power=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{), }
-                               \AttributeTok{centered=}\ConstantTok{TRUE}\NormalTok{)}
+                               \AttributeTok{centered=}\ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# Centered moments}
+\CommentTok{\# For the variance, Kurtosis and Skewness}
+
 \NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(predMean, predVar)}
 \NormalTok{pred }\OtherTok{\textless{}{-}}\NormalTok{ pred }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"power"}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{value=}\FunctionTok{ifelse}\NormalTok{(power}\SpecialCharTok{==}\DecValTok{2}\NormalTok{, }\FunctionTok{sqrt}\NormalTok{(value), value))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{value=}\FunctionTok{ifelse}\NormalTok{(power}\SpecialCharTok{==}\DecValTok{2}\NormalTok{, }\FunctionTok{sqrt}\NormalTok{(value), value))}\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Define std}
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{values\_from =}\NormalTok{ value,}
               \AttributeTok{names\_from =}\NormalTok{ power)}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{3}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{\textasciigrave{}}\AttributeTok{3}\StringTok{\textasciigrave{}}\SpecialCharTok{/}\StringTok{\textasciigrave{}}\AttributeTok{2}\StringTok{\textasciigrave{}}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}
-         \StringTok{\textasciigrave{}}\AttributeTok{4}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{\textasciigrave{}}\AttributeTok{4}\StringTok{\textasciigrave{}}\SpecialCharTok{/}\StringTok{\textasciigrave{}}\AttributeTok{2}\StringTok{\textasciigrave{}}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+         \StringTok{\textasciigrave{}}\AttributeTok{4}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{\textasciigrave{}}\AttributeTok{4}\StringTok{\textasciigrave{}}\SpecialCharTok{/}\StringTok{\textasciigrave{}}\AttributeTok{2}\StringTok{\textasciigrave{}}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Kurtosis and Skewness}
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"name"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"power"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{data.frame}\NormalTok{()}
 \CommentTok{\#\textgreater{} Warning: There was 1 warning in \textasciigrave{}mutate()\textasciigrave{}.}
@@ -1276,7 +1304,7 @@ Importantly, when using probabilistic inference schemes like Laplace approximati
             \AttributeTok{q50 =} \FunctionTok{quantile}\NormalTok{(value, }\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{)),}
             \AttributeTok{q90 =} \FunctionTok{quantile}\NormalTok{(value, }\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{)),}
             \AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(value), }\AttributeTok{.groups=}\StringTok{"keep"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
+  \FunctionTok{ungroup}\NormalTok{() }\CommentTok{\# summarise uncertainty}
 
 
 \FunctionTok{ggplot}\NormalTok{(df\_plot, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age)) }\SpecialCharTok{+}
@@ -1301,7 +1329,96 @@ Importantly, when using probabilistic inference schemes like Laplace approximati
 \caption{Simultaneous prediction of the fields moments (and associated uncertainty) using a SLGP model}\label{fig:SLGPMCMCplotMoments}
 \end{figure}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/MomentsMCMC"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 We also support the joint prediction of quantiles at arbitrary levels. Because quantiles are derived directly from the estimated densities, they are guaranteed to be consistent and non-crossing - a property that cannot always be ensured in standard quantile regression. This makes them reliable tools for summarizing distributional shape (e.g., asymmetry, spread) at each location.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{probsL }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{75}\NormalTok{, }\DecValTok{95}\NormalTok{)}\SpecialCharTok{/}\DecValTok{100}
+\NormalTok{dfX }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{age=}\FunctionTok{seq}\NormalTok{(range\_x[}\DecValTok{1}\NormalTok{], range\_x[}\DecValTok{2}\NormalTok{], }\DecValTok{1}\NormalTok{))}
+\NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{predictSLGP\_quantiles}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelMAP,}
+                              \AttributeTok{newNodes =}\NormalTok{ dfX, }
+                              \AttributeTok{probs=}\NormalTok{probsL)}
+
+\NormalTok{pred}\SpecialCharTok{$}\NormalTok{probs }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Quantile: "}\NormalTok{, }\DecValTok{100}\SpecialCharTok{*}\NormalTok{pred}\SpecialCharTok{$}\NormalTok{probs, }\StringTok{"\%"}\NormalTok{),}
+                     \AttributeTok{levels=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Quantile: "}\NormalTok{, }\DecValTok{100}\SpecialCharTok{*}\NormalTok{probsL, }\StringTok{"\%"}\NormalTok{))}
+
+\CommentTok{\#Use quantile regression as comparison}
+\CommentTok{\# install.packages("quantreg")  \# Run only if not already installed}
+\FunctionTok{library}\NormalTok{(quantreg)}
+\CommentTok{\#\textgreater{} Warning: le package \textquotesingle{}quantreg\textquotesingle{} a été compilé avec la version R 4.4.3}
+\CommentTok{\#\textgreater{} Le chargement a nécessité le package : SparseM}
+\CommentTok{\#\textgreater{} Warning: le package \textquotesingle{}SparseM\textquotesingle{} a été compilé avec la version R 4.4.2}
+\NormalTok{fit\_q }\OtherTok{\textless{}{-}} \FunctionTok{rq}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(age}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(age}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(age}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{), }
+            \AttributeTok{data =}\NormalTok{ df, }\AttributeTok{tau =}\NormalTok{ probsL, }\AttributeTok{method=}\StringTok{"fn"}\NormalTok{)}
+\NormalTok{pred\_q }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit\_q, }\AttributeTok{newdata =}\NormalTok{ dfX)}
+\NormalTok{pred}\SpecialCharTok{$}\NormalTok{qQuantileReg }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{t}\NormalTok{(pred\_q))}
+
+\NormalTok{plot1 }\OtherTok{\textless{}{-}}  \FunctionTok{ggplot}\NormalTok{(pred, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{qSLGP\_1, }\AttributeTok{lty=}\StringTok{"SLGP"}\NormalTok{, }
+                        \AttributeTok{col=}\NormalTok{probs,}\AttributeTok{group=}\NormalTok{probs), }\AttributeTok{lwd=}\FloatTok{0.75}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{qQuantileReg, }\AttributeTok{lty=}\StringTok{"Quantile regression"}\NormalTok{,}
+                        \AttributeTok{col=}\NormalTok{probs, }\AttributeTok{group=}\NormalTok{probs),}
+            \AttributeTok{lwd=}\FloatTok{0.75}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of owner{-}occupied units}\SpecialCharTok{\textbackslash{}n}\StringTok{built prior to 1940 [AGE, \%]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Median value of owner{-}occupied homes [MEDV, k$]"}\NormalTok{,}
+       \AttributeTok{fill =} \StringTok{"Quantile levels"}\NormalTok{,}
+       \AttributeTok{col =} \StringTok{"Quantile levels"}\NormalTok{, }
+       \AttributeTok{lty=}\StringTok{"Quantile estimation method"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_x,}
+                  \AttributeTok{ylim=}\NormalTok{range\_response)}\SpecialCharTok{+}
+  \FunctionTok{scale\_linetype\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\NormalTok{plot2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{age))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{col=}\StringTok{"navy"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey"}\NormalTok{, }\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{,}
+                 \AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \ConstantTok{NULL}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Sample count"}\NormalTok{) }
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\NormalTok{p\_with\_marginal }\OtherTok{\textless{}{-}} \FunctionTok{ggarrange}\NormalTok{(}
+\NormalTok{  plot2, plot1,}
+  \AttributeTok{ncol =} \DecValTok{1}\NormalTok{, }\AttributeTok{heights =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{),  }\CommentTok{\# adjust height ratio}
+  \AttributeTok{align =} \StringTok{"v"}
+\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(p\_with\_marginal)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/SLGPMCMCplotQuantiles-1} 
+
+}
+
+\caption{Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP}\label{fig:SLGPMCMCplotQuantiles}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(plot1, }\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/QuantilesMAP1"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(p\_with\_marginal, }\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/QuantilesMAP2"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+There is a slight disagreement between both methods for the 95\% quantile and \(age \geq 75\).
+
+\begin{verbatim}
+#> 
+#> Attachement du package : 'scales'
+#> L'objet suivant est masqué depuis 'package:viridis':
+#> 
+#>     viridis_pal
+\end{verbatim}
+
+\includegraphics{IntroductionSLGP_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1324,30 +1441,54 @@ We also support the joint prediction of quantiles at arbitrary levels. Because q
   \FunctionTok{ungroup}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{probs=}\FunctionTok{factor}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Quantile: "}\NormalTok{, }\DecValTok{100}\SpecialCharTok{*}\NormalTok{probs, }\StringTok{"\%"}\NormalTok{),}
                       \AttributeTok{levels=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Quantile: "}\NormalTok{, }\DecValTok{100}\SpecialCharTok{*}\NormalTok{probsL, }\StringTok{"\%"}\NormalTok{)))}
+\NormalTok{df\_plot}\SpecialCharTok{$}\NormalTok{qQuantileReg }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{t}\NormalTok{(pred\_q))}
 
 
-\FunctionTok{ggplot}\NormalTok{(df\_plot, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age, }\AttributeTok{col=}\NormalTok{probs, }\AttributeTok{fill=}\NormalTok{probs, }\AttributeTok{group=}\NormalTok{probs)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin=}\NormalTok{q10, }\AttributeTok{ymax=}\NormalTok{q90),}
-              \AttributeTok{alpha =} \FloatTok{0.25}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{q50))}\SpecialCharTok{+}
+\NormalTok{plot1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_plot, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin=}\NormalTok{q10, }\AttributeTok{ymax=}\NormalTok{q90, }
+                            \AttributeTok{col=}\NormalTok{probs, }\AttributeTok{fill=}\NormalTok{probs, }\AttributeTok{group=}\NormalTok{probs),}
+              \AttributeTok{alpha =} \FloatTok{0.25}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{q50, }\AttributeTok{lty=}\StringTok{"SLGP"}\NormalTok{, }
+                        \AttributeTok{col=}\NormalTok{probs,}\AttributeTok{group=}\NormalTok{probs), }\AttributeTok{lwd=}\FloatTok{0.75}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{qQuantileReg, }\AttributeTok{lty=}\StringTok{"Quantile regression"}\NormalTok{,}
+                        \AttributeTok{col=}\NormalTok{probs, }\AttributeTok{group=}\NormalTok{probs),}
+            \AttributeTok{lwd=}\FloatTok{0.75}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of owner{-}occupied units}\SpecialCharTok{\textbackslash{}n}\StringTok{built prior to 1940 [AGE, \%]"}\NormalTok{, }
        \AttributeTok{y =} \StringTok{"Median value of owner{-}occupied homes [MEDV, k$]"}\NormalTok{,}
        \AttributeTok{fill =} \StringTok{"Quantile levels"}\NormalTok{,}
-       \AttributeTok{col =} \StringTok{"Quantile levels"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{col =} \StringTok{"Quantile levels"}\NormalTok{, }
+       \AttributeTok{lty=}\StringTok{"Quantile estimation method"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_x,}
-                  \AttributeTok{ylim=}\NormalTok{range\_response)}
+                  \AttributeTok{ylim=}\NormalTok{range\_response)}\SpecialCharTok{+}
+  \FunctionTok{scale\_linetype\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\NormalTok{p\_with\_marginal }\OtherTok{\textless{}{-}} \FunctionTok{ggarrange}\NormalTok{(}
+\NormalTok{  plot2, plot1,}
+  \AttributeTok{ncol =} \DecValTok{1}\NormalTok{, }\AttributeTok{heights =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{),  }\CommentTok{\# adjust height ratio}
+  \AttributeTok{align =} \StringTok{"v"}
+\NormalTok{)}
+
+\CommentTok{\# Display the plot}
+\FunctionTok{print}\NormalTok{(p\_with\_marginal)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \includegraphics{IntroductionSLGP_files/figure-latex/SLGPMCMCplotQuantiles-1} 
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/SLGPMCMCplotQuantiles2-1} 
 
 }
 
-\caption{Simultaneous quantile prediction (and associated uncertainty) using a SLGP model}\label{fig:SLGPMCMCplotQuantiles}
+\caption{Simultaneous quantile prediction (and associated uncertainty) using a SLGP model, with estimation performed by MCMC}\label{fig:SLGPMCMCplotQuantiles2}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(plot1, }\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/QuantilesMCMC1"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(p\_with\_marginal, }\AttributeTok{file=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/QuantilesMCMC2"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \section{Impact of various parameters on the quality of the estimation}\label{impact-of-various-parameters-on-the-quality-of-the-estimation}
 
@@ -1553,7 +1694,7 @@ When the lengthscale is too small, the estimation fails to generalize effectivel
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(len) }\SpecialCharTok{==}\DecValTok{1}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{n, }\AttributeTok{group=}\NormalTok{nFreq, }
              \AttributeTok{col=}\FunctionTok{as.factor}\NormalTok{(nFreq), }\AttributeTok{fill=}\FunctionTok{as.factor}\NormalTok{(nFreq)))}\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=} \FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{meandH))}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{facet\_grid}\NormalTok{(len}\SpecialCharTok{\textasciitilde{}}\NormalTok{matpar)}\SpecialCharTok{+}
@@ -1576,6 +1717,12 @@ When the lengthscale is too small, the estimation fails to generalize effectivel
 \caption{Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is too small}\label{fig:PlotTooSmallLen}
 \end{figure}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/benchmarkTooSmall"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 Indeed, with such low lengthscale, the model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
 
 For other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
@@ -1587,7 +1734,7 @@ For other, more reasonable values of the lengthscales, we observe more satisfyin
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(len) }\SpecialCharTok{!=}\DecValTok{1}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{n, }\AttributeTok{group=}\NormalTok{nFreq, }
              \AttributeTok{col=}\FunctionTok{as.factor}\NormalTok{(nFreq), }\AttributeTok{fill=}\FunctionTok{as.factor}\NormalTok{(nFreq)))}\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=} \FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{meandH))}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{facet\_grid}\NormalTok{(len}\SpecialCharTok{\textasciitilde{}}\NormalTok{matpar)}\SpecialCharTok{+}
@@ -1612,13 +1759,19 @@ For other, more reasonable values of the lengthscales, we observe more satisfyin
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/benchmark1"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 
 \NormalTok{df\_res\_plot }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(len) }\SpecialCharTok{!=}\DecValTok{1}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(n }\SpecialCharTok{\textgreater{}=}\DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{n, }\AttributeTok{group=}\NormalTok{nFreq, }
              \AttributeTok{col=}\FunctionTok{as.factor}\NormalTok{(nFreq), }\AttributeTok{fill=}\FunctionTok{as.factor}\NormalTok{(nFreq)))}\SpecialCharTok{+}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ q10, }\AttributeTok{ymax=}\NormalTok{q90), }\AttributeTok{alpha=}\FloatTok{0.1}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{mapping=} \FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{meandH))}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{facet\_grid}\NormalTok{(len}\SpecialCharTok{\textasciitilde{}}\NormalTok{matpar)}\SpecialCharTok{+}
@@ -1642,9 +1795,292 @@ For other, more reasonable values of the lengthscales, we observe more satisfyin
 \caption{Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big. (Same results, different scale)}\label{fig:PlotOtherLen2}
 \end{figure}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/benchmark2"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 Indeed, one notices that higher number of frequencies (i.e.~of basis functions) increases the performances of the mode, until the well-specified setting (200 frequencies) is reached.
 
 As observed qualitatively in the MAP section, models that are too smooth (wrong kernel assumptions and/or wrong lengthscale), struggle to capture fine-scale elements.
+
+\section{Using SLGPs for discrete distributions}\label{using-slgps-for-discrete-distributions}
+
+Rather than predicting a density, one can adjust the current code to make predictions for discrete distributions.
+For that purpose, we use the Boston Housing dataset and propose modeling the distribution of rad (index of accessibility to radial highways, between 1 and 24 where 24 indicates the best accessibility and 1 the worst) as a function of age using SLGP. Since rad is an integer-valued variable, our goal is to adjust the implementation for this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{range\_response }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad)}
+
+\NormalTok{scatter\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age, }\AttributeTok{y =}\NormalTok{ rad)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of owner{-}occupied units}\SpecialCharTok{\textbackslash{}n}\StringTok{built prior to 1940 [AGE, \%]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{,}
+       \AttributeTok{title =} \StringTok{"Index of accessibility vs. age of homes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_x,}
+                  \AttributeTok{ylim=}\NormalTok{range\_response)}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad))  }
+\NormalTok{  )}
+\CommentTok{\# Compute normalized frequencies per age\_bin}
+\NormalTok{df\_bar }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{(age\_bin, rad) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(age\_bin) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n))}
+
+\CommentTok{\# Histogram: Distribution of med by age bin}
+\NormalTok{hist\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_bar, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ prop), }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{,}
+           \AttributeTok{fill =} \StringTok{"darkgrey"}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey50"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{)  }\SpecialCharTok{+}
+  \FunctionTok{geom\_rug}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad), }
+           \AttributeTok{sides =} \StringTok{"b"}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age\_bin, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Probability density"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Histogram of median housing values by AGE group"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad))  }
+\NormalTok{  )}
+\FunctionTok{ggarrange}\NormalTok{(scatter\_plot, hist\_plot, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{,}
+          \AttributeTok{widths =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/figureHousingDiscrete-1} 
+
+}
+
+\caption{A visual representation of the dependency of the index of accessibility to radial highways on proportion of owner-occupied units constructed before 1940 in the Boston Housing dataset.}\label{fig:figureHousingDiscrete}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"./Figures/scatterDiscrete.pdf"}\NormalTok{, }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\FloatTok{3.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We propose mapping the value 24 to 9 for rad, resulting in a more compact domain. We will compare both approaches by fitting a model on each.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{rad2 }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad}\SpecialCharTok{==}\DecValTok{24}\NormalTok{, }\DecValTok{9}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{rad) }
+\NormalTok{range\_response2 }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2)}
+
+\NormalTok{scatter\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age, }\AttributeTok{y =}\NormalTok{ rad2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of owner{-}occupied units}\SpecialCharTok{\textbackslash{}n}\StringTok{built prior to 1940 [AGE, \%]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{,}
+       \AttributeTok{title =} \StringTok{"Index of accessibility vs. age of homes"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_x,}
+                  \AttributeTok{ylim=}\NormalTok{range\_response2)}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2))  }
+\NormalTok{  )}
+\CommentTok{\# Compute normalized frequencies per age\_bin}
+\NormalTok{df\_bar2 }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{(age\_bin, rad2) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(age\_bin) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n))}
+
+\CommentTok{\# Histogram: Distribution of rad by age bin}
+\NormalTok{hist\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_bar2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ prop), }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{,}
+           \AttributeTok{fill =} \StringTok{"darkgrey"}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey50"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{)  }\SpecialCharTok{+}
+  \FunctionTok{geom\_rug}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad2), }
+           \AttributeTok{sides =} \StringTok{"b"}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age\_bin, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Probability density"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Histogram of median housing values by AGE group"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response2,}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2))  }
+\NormalTok{  )}
+\FunctionTok{ggarrange}\NormalTok{(scatter\_plot, hist\_plot, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{,}
+          \AttributeTok{widths =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/figureHousing2-1} 
+
+}
+
+\caption{Figure 2: Index of Accessibility to Radial Highways as a Function of Home Value and Distance to Employment Centers, with rescaled indices}\label{fig:figureHousing2}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"./Figures/scatterDiscrete2.pdf"}\NormalTok{, }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\FloatTok{3.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\NormalTok{modelMAPdisc }\OtherTok{\textless{}{-}} \FunctionTok{slgp}\NormalTok{(rad}\SpecialCharTok{\textasciitilde{}}\NormalTok{age, }\CommentTok{\# Use a formula with two indexing variables}
+                     \AttributeTok{data=}\NormalTok{df,}
+                     \AttributeTok{method=}\StringTok{"MAP"}\NormalTok{, }\CommentTok{\#Maximum a posteriori estimation scheme}
+                     \AttributeTok{basisFunctionsUsed =} \StringTok{"RFF"}\NormalTok{,}
+                     \AttributeTok{interpolateBasisFun=}\StringTok{"WNN"}\NormalTok{, }\CommentTok{\# Accelerate inference}
+                     \AttributeTok{hyperparams =} \FunctionTok{list}\NormalTok{(}\AttributeTok{lengthscale=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.15}\NormalTok{), }
+                                        \AttributeTok{sigma2=}\DecValTok{1}\NormalTok{), }
+                     \AttributeTok{nIntegral =} \DecValTok{24}\NormalTok{, }
+                     \AttributeTok{sigmaEstimationMethod =} \StringTok{"heuristic"}\NormalTok{, }
+                     \AttributeTok{predictorsLower=} \FunctionTok{c}\NormalTok{(range\_x[}\DecValTok{1}\NormalTok{]),}
+                     \AttributeTok{predictorsUpper=} \FunctionTok{c}\NormalTok{(range\_x[}\DecValTok{2}\NormalTok{]),}
+                     \AttributeTok{responseRange=}\NormalTok{ range\_response,}
+                     \AttributeTok{opts\_BasisFun =} \FunctionTok{list}\NormalTok{(}\AttributeTok{nFreq=}\DecValTok{200}\NormalTok{,}
+                                          \AttributeTok{MatParam=}\DecValTok{5}\SpecialCharTok{/}\DecValTok{2}\NormalTok{),}
+                     \AttributeTok{seed=}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{modelMAPdisc2 }\OtherTok{\textless{}{-}} \FunctionTok{slgp}\NormalTok{(rad2}\SpecialCharTok{\textasciitilde{}}\NormalTok{age, }\CommentTok{\# Use a formula with two indexing variables}
+                      \AttributeTok{data=}\NormalTok{df,}
+                      \AttributeTok{method=}\StringTok{"MAP"}\NormalTok{, }
+                      \AttributeTok{basisFunctionsUsed =} \StringTok{"RFF"}\NormalTok{,}
+                      \AttributeTok{interpolateBasisFun=}\StringTok{"WNN"}\NormalTok{, }\CommentTok{\# Accelerate inference}
+                      \AttributeTok{hyperparams =} \FunctionTok{list}\NormalTok{(}\AttributeTok{lengthscale=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.15}\NormalTok{), }
+                                         \AttributeTok{sigma2=}\DecValTok{1}\NormalTok{), }
+                      \AttributeTok{nIntegral =} \DecValTok{9}\NormalTok{, }
+                      \AttributeTok{sigmaEstimationMethod =} \StringTok{"heuristic"}\NormalTok{, }
+                      \AttributeTok{predictorsLower=} \FunctionTok{c}\NormalTok{(range\_x[}\DecValTok{1}\NormalTok{]),}
+                      \AttributeTok{predictorsUpper=} \FunctionTok{c}\NormalTok{(range\_x[}\DecValTok{2}\NormalTok{]),}
+                      \AttributeTok{responseRange=}\NormalTok{ range\_response2,}
+                      \AttributeTok{opts\_BasisFun =} \FunctionTok{list}\NormalTok{(}\AttributeTok{nFreq=}\DecValTok{200}\NormalTok{,}
+                                           \AttributeTok{MatParam=}\DecValTok{5}\SpecialCharTok{/}\DecValTok{2}\NormalTok{),}
+                      \AttributeTok{seed=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We can represent the conditional probabilities. For that, we use bins for the samples, as there are not enough replicates for other visualisations. We display the histograms of values in these bins compared to SLGP predictions of the probabilities at the center of the bins.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(viridis)}
+\NormalTok{dfGrid }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{expand.grid}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{),  }
+                                 \FunctionTok{seq}\NormalTok{(range\_response[}\DecValTok{1}\NormalTok{],}
+\NormalTok{                                     range\_response[}\DecValTok{2}\NormalTok{])))}
+\NormalTok{dfGrid2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{expand.grid}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{),  }
+                                  \FunctionTok{seq}\NormalTok{(range\_response2[}\DecValTok{1}\NormalTok{],}
+\NormalTok{                                      range\_response2[}\DecValTok{2}\NormalTok{])))}
+\FunctionTok{colnames}\NormalTok{(dfGrid) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"rad"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(dfGrid2) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"rad2"}\NormalTok{)}
+\NormalTok{dfGrid}\SpecialCharTok{$}\NormalTok{age\_bin }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{levels}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{age\_bin)[dfGrid}\SpecialCharTok{$}\NormalTok{age],}
+                         \AttributeTok{levels=}\FunctionTok{levels}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{age\_bin))}
+\NormalTok{dfGrid2}\SpecialCharTok{$}\NormalTok{age\_bin }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{levels}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{age\_bin)[dfGrid2}\SpecialCharTok{$}\NormalTok{age],}
+                          \AttributeTok{levels=}\FunctionTok{levels}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{age\_bin))}
+\NormalTok{dfGrid}\SpecialCharTok{$}\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{95}\NormalTok{, }\DecValTok{10}\NormalTok{)[dfGrid}\SpecialCharTok{$}\NormalTok{age]}
+\NormalTok{dfGrid2}\SpecialCharTok{$}\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{95}\NormalTok{, }\DecValTok{10}\NormalTok{)[dfGrid2}\SpecialCharTok{$}\NormalTok{age]}
+\NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{predictSLGP\_newNode}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelMAPdisc,}
+                            \AttributeTok{newNodes =}\NormalTok{ dfGrid,}
+                            \AttributeTok{nIntegral =} \DecValTok{24}\NormalTok{)}
+\NormalTok{pred2 }\OtherTok{\textless{}{-}} \FunctionTok{predictSLGP\_newNode}\NormalTok{(}\AttributeTok{SLGPmodel=}\NormalTok{modelMAPdisc2,}
+                             \AttributeTok{newNodes =}\NormalTok{ dfGrid2,}
+                             \AttributeTok{nIntegral =} \DecValTok{9}\NormalTok{)}
+\NormalTok{pred[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)] }\OtherTok{\textless{}{-}}\NormalTok{ pred[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)] }\SpecialCharTok{*} \FunctionTok{diff}\NormalTok{(range\_response)}\SpecialCharTok{/}
+\NormalTok{  (}\FunctionTok{diff}\NormalTok{(range\_response) }\SpecialCharTok{+}\DecValTok{1}\NormalTok{) }
+\NormalTok{pred2[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)] }\OtherTok{\textless{}{-}}\NormalTok{ pred2[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)] }\SpecialCharTok{*} \FunctionTok{diff}\NormalTok{(range\_response2)}\SpecialCharTok{/}
+\NormalTok{  (}\FunctionTok{diff}\NormalTok{(range\_response2) }\SpecialCharTok{+}\DecValTok{1}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{data=}\NormalTok{df\_bar, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad}\FloatTok{{-}0.2}\NormalTok{, }\AttributeTok{y =}\NormalTok{ prop), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.4}\NormalTok{,}
+           \AttributeTok{fill=}\StringTok{"cornflowerblue"}\NormalTok{, }\AttributeTok{col=}\StringTok{"navy"}\NormalTok{, }\AttributeTok{lwd=}\FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.7}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{data=}\NormalTok{pred, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad}\FloatTok{+0.2}\NormalTok{, }\AttributeTok{y =}\NormalTok{ pdf\_1), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.4}\NormalTok{,}
+           \AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey"}\NormalTok{, }\AttributeTok{lwd=}\FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.7}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+} 
+  \FunctionTok{geom\_rug}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad), }
+           \AttributeTok{sides =} \StringTok{"b"}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age\_bin, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Probability density"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Distribution of RAD across bins of various AGE values (blue histogram)}\SpecialCharTok{\textbackslash{}n}\StringTok{VS SLGP at the center of these bins (red bars)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response,}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2))  }
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/SLGPplotting2disc-1} 
+
+}
+
+\caption{Predictive probability density of rad at age, seen over slices.}\label{fig:SLGPplotting2disc}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histMAPdisc"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{data=}\NormalTok{df\_bar2, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad2}\FloatTok{{-}0.2}\NormalTok{, }\AttributeTok{y =}\NormalTok{ prop), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.4}\NormalTok{,}
+           \AttributeTok{fill=}\StringTok{"cornflowerblue"}\NormalTok{, }\AttributeTok{col=}\StringTok{"navy"}\NormalTok{, }\AttributeTok{lwd=}\FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.7}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{data=}\NormalTok{pred2, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad2}\FloatTok{+0.2}\NormalTok{, }\AttributeTok{y =}\NormalTok{ pdf\_1), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.4}\NormalTok{,}
+           \AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey"}\NormalTok{, }\AttributeTok{lwd=}\FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.7}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+} 
+  \FunctionTok{geom\_rug}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rad2), }
+           \AttributeTok{sides =} \StringTok{"b"}\NormalTok{, }\AttributeTok{color =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age\_bin, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Index of accessibility to radial highways [RAD]"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Probability density"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Distribution of RAD across bins of various AGE values (blue histogram)}\SpecialCharTok{\textbackslash{}n}\StringTok{VS SLGP at the center of these bins (red bars)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim=}\NormalTok{range\_response2,}
+                  \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2)),  }
+    \AttributeTok{labels =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{rad2))  }
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{IntroductionSLGP_files/figure-latex/SLGPplottingdisc2-1} 
+
+}
+
+\caption{Predictive probability density of rad at age, seen over slices.}\label{fig:SLGPplottingdisc2}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"./Figures/histMAPdisc2"}\NormalTok{,  }\StringTok{".pdf"}\NormalTok{), }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{references.bib}
 
