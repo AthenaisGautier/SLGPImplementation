@@ -60,7 +60,7 @@ scatter_plot <- ggplot(df, aes(x = age, y = medv)) +
   coord_cartesian(xlim=range_x,
                   ylim=range_response)
 
-# Histogram: Distribution of med by age bin
+# Histogram: Distribution of med by 'AGE' bin
 hist_plot <- ggplot(df, aes(x = medv)) +
   geom_histogram(mapping=aes(y=after_stat(density)),
                  position = "identity", breaks = seq(0, 50, 2.5),
@@ -69,7 +69,7 @@ hist_plot <- ggplot(df, aes(x = medv)) +
   facet_wrap(~ age_bin, scales = "free_y", nrow=2) +
   labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median housing values by AGE group") +
+       title = "Histogram of median housing values by 'AGE' group") +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
@@ -96,7 +96,7 @@ library(SLGP)
 
 modelPrior <- slgp(medv~age, # Use a formula to specify predictors VS response
                    # Can use medv~. for all variables,
-                   # Or medv ~ age + var2 + var3 for more variables
+                   # Or 'MEDV' ~ age + var2 + var3 for more variables
                    data=df,
                    method="none", #Maximum a posteriori estimation scheme
                    basisFunctionsUsed = "RFF",
@@ -127,7 +127,7 @@ Here:
 
 To understand how the SLGP prior behaves, we generate and visualize random draws from the prior distribution over probability densities of `medv` at different `age` values.
 
-```{r SLGPplottingPrior1, fig.cap = "Samples from the SLGP Prior for the pdfs of MEDV at AGE, visualised across slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPplottingPrior1, fig.cap = "Samples from the SLGP Prior for the pdfs of 'MEDV' at AGE, visualised across slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 
 
 library(tidyr)
@@ -148,8 +148,7 @@ scale_factor <- 200
 ggplot()  +
   labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        x = "Median value of owner-occupied homes [MEDV, k$]",
-       title = "Samples from the SLGP Prior for the pdfs of MEDV at AGE, 
-       visualised across slices") +
+       title = "Samples from the SLGP Prior for the pdfs of 'MEDV' at AGE, visualised across slices") +
   theme_bw()+
   geom_ribbon(data=predPrior,
               mapping=aes(x=medv, ymax=scale_factor*value+age, 
@@ -159,9 +158,7 @@ ggplot()  +
   #            mapping=aes(x = medv, y = age), alpha = 0.5, color = "navy")+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: 
-                                            Proportion of owner-occupied units built 
-                                            prior to 1940",
+                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -175,12 +172,12 @@ ggsave(paste0("./Figures/ribbonsPrior",  ".pdf"), width=10, height=5)
 
 ```
 
-This figure illustrates how the SLGP prior encodes a distribution over densities for different age values. The wide variability indicates the flexibility of SLGPs.
+This figure illustrates how the SLGP prior encodes a distribution over densities for different 'AGE' values. The wide variability indicates the flexibility of SLGPs.
 
 ### Assessing whether the flexibility matches that of the data
 
 To assess how well the SLGP prior aligns with the actual data distribution, we can also compare it to histograms of `medv` at selected `age` values. This visualisation helps us evaluate whether the prior has enough flexibility to represent the observed variability in the data.
-```{r SLGPplottingPrior2, fig.cap = "Samples from the SLGP Prior versus histograms of median value at bins centered at several 'age' values", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPplottingPrior2, fig.cap = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS three SLGP prior draws at bins centers", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
 
 selected_values <- c(20, 50, 95)
 gap <- 5
@@ -220,10 +217,9 @@ ggplot(mapping=aes(x = medv)) +
             color = "black", lwd=0.1, alpha=0.5)+
   geom_line(data=predPrior, mapping=aes(y=value, group=name, col=name), lwd=1.1)+
   facet_wrap(~ category, scales = "free_y", nrow=1) +
-  labs(x = "Median value of owner-occupied homes [k$]", 
+  labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, 
-       with width 5\nversus draws from a SLGP prior") +
+       title = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS three SLGP prior draws at bins centers") +
   theme_bw()+
   theme(legend.position="bottom",
         legend.direction = "horizontal",
@@ -296,7 +292,7 @@ modelPrior4 <- slgp(medv~age,
 
 The figure below visualizes samples from the priors corresponding to each kernel. While the overall behavior remains similar, the choice of kernel influences the smoothness of the density estimates. The exponential kernel exhibits the most variability, while the Gaussian kernel enforces stronger smoothness constraints.
 
-```{r SLGPplottingOtherPrior1, fig.cap = "Samples from the other SLGP Priors for the pdfs of MEDV at AGE, visualised across slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPplottingOtherPrior1, fig.cap = "Samples from the other SLGP Priors for the pdfs of 'MEDV' at AGE, visualised across slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 nrep <- 1
 set.seed(1)
 coef <- matrix(rnorm(n=nrep*p), nrow=nrep)
@@ -323,7 +319,7 @@ scale_factor <- 200
 ggplot()  +
   labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        x = "Median value of owner-occupied homes [MEDV, k$]",
-       title = "Samples from SLGP Priors with varying smoothnesses for the pdfs of MEDV at AGE, visualised across slices") +
+       title = "Samples from SLGP Priors with varying smoothnesses for the pdfs of 'MEDV' at AGE, visualised across slices") +
   theme_bw()+
   geom_ribbon(data=predPrior,
               mapping=aes(x=medv, ymax=scale_factor*value+age, 
@@ -331,9 +327,7 @@ ggplot()  +
               col="grey", alpha=0.9)+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: 
-                                            Proportion of owner-occupied units built 
-                                            prior to 1940",
+                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -409,7 +403,7 @@ scale_factor <- 200
 ggplot()  +
   labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        x = "Median value of owner-occupied homes [MEDV, k$]",
-       title = "Samples from SLGP Priors with varying smoothnesses for the pdfs of MEDV at AGE, visualised across slices") +
+       title = "Samples from SLGP Priors with varying smoothnesses for the pdfs of 'MEDV' at AGE, visualised across slices") +
   theme_bw()+
   geom_ribbon(data=predPriors,
               mapping=aes(x=medv, ymax=scale_factor*value+age, 
@@ -450,7 +444,7 @@ We demonstrate three equivalent ways to train an SLGP model using our package:
 ```{r SLGPfitting00, eval=FALSE}
 modelMAP <- slgp(medv~age, # Use a formula to specify predictors VS response
                  # Can use medv~. for all variables,
-                 # Or medv ~ age + var2 + var3 for more variables
+                 # Or 'MEDV' ~ age + var2 + var3 for more variables
                  data=df,
                  method="MAP", #Maximum a posteriori estimation scheme
                  basisFunctionsUsed = "RFF",
@@ -502,11 +496,11 @@ modelMAP <- slgp(medv~age,
 
 The estimated conditional density function is displayed using two different representations:
 
-* A colormap showing the predicted density of medv as a function of age.
+* A colormap showing the predicted density of 'MEDV' as a function of age.
 
-* A ribbon plot, which slices the conditional density at selected age values to provide a clearer view of the estimated distributions.
+* A ribbon plot, which slices the conditional density at selected 'AGE' values to provide a clearer view of the estimated distributions.
 
-```{r SLGPplotting1, fig.cap = "Predictive probability density of medv at age, as predicted by a SLGP.", fig.fullwidth=TRUE, fig.height=6, fig.width=6, fig.align='center',fig.pos="H"}
+```{r SLGPplotting1, fig.cap = "Predictive probability density of 'MEDV' at 'AGE', as predicted by a SLGP.", fig.fullwidth=TRUE, fig.height=6, fig.width=6, fig.align='center',fig.pos="H"}
 dfGrid <- data.frame(expand.grid(seq(range_x[1], range_x[2],, 101), 
                                  seq(range_response[1], range_response[2],, 101)))
 colnames(dfGrid) <- c("age", "medv")
@@ -515,8 +509,7 @@ pred <- predictSLGP_newNode(SLGPmodel=modelMAP,
 
 ggplot()  +
   labs(y = "Proportion of owner-occupied units\nbuilt prior to 1940 [%]", 
-       x = "Median value of owner-occupied homes [k$]",
-       title = "Median value vs. age of homes") +
+       x = "Median value of owner-occupied homes [MEDV, k$]") +
   theme_bw()+
   geom_raster(data=pred,
               mapping=aes(x=age, y=medv, fill=pdf_1))+
@@ -537,7 +530,7 @@ ggplot()  +
 ```
 
 
-```{r SLGPplotting2, fig.cap = "Predictive probability density of medv at age, seen over slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPplotting2, fig.cap = "Predictive probability density of 'MEDV' at 'AGE', seen over slices.", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 
 library(viridis)
 dfGrid <- data.frame(expand.grid(seq(range_x[1], range_x[2], 5), 
@@ -548,9 +541,8 @@ pred <- predictSLGP_newNode(SLGPmodel=modelMAP,
 
 scale_factor <- 100
 ggplot()  +
-  labs(y = "Proportion of owner-occupied units\nbuilt prior to 1940 [%]", 
-       x = "Median value of owner-occupied homes [k$]",
-       title = "Median value vs. age of homes") +
+  labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
+       x = "Median value of owner-occupied homes [MEDV, k$]") +
   theme_bw()+
   geom_ribbon(data=pred,
               mapping=aes(x=medv, ymax=scale_factor*pdf_1+age, 
@@ -560,9 +552,7 @@ ggplot()  +
              mapping=aes(x = medv, y = age), alpha = 0.5, color = "navy")+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: 
-                                            Proportion of owner-occupied units built 
-                                            prior to 1940",
+                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -577,7 +567,7 @@ The figure reveals how the SLGP captures the structure in the estimated conditio
 
 ### Comparing the estimation to data
 
-```{r SLGPplottingMAP, fig.cap = "SLGP MAP versus histograms of median value at bins centered at several 'age' values", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPplottingMAP, fig.cap = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS SLGP MAP estimators at bins centers", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
 
 selected_values <- c(20, 50, 95)
 gap <- 5
@@ -617,9 +607,9 @@ ggplot(mapping=aes(x = medv)) +
             color = "black", lwd=0.1, alpha=0.5)+
   geom_line(data=predMAP, mapping=aes(y=value, group=name, col=name), lwd=1.1)+
   facet_wrap(~ category, scales = "free_y", nrow=1) +
-  labs(x = "Median value of owner-occupied homes [k$]", 
+  labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, with width 5\nversus draws from a SLGP prior") +
+       title = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS SLGP-MAP estimators at bins centers") +
   theme_bw()+
   theme(legend.position="bottom",
         legend.direction = "horizontal",
@@ -632,7 +622,7 @@ ggsave(paste0("./Figures/histMAP",  ".pdf"), width=10, height=4)
 ```
 
 
-This other figure directly compares the SLGP MAP estimate to histograms of `medv` at selected `age` values, illustrating how well the model aligns with the observed data. Despite the small number of replicates, the SLGP estimate follows the empirical distribution, adapting to changes in shape across different age groups. The survivor bias is again visible, as the model assigns some probability mass to higher home values for older properties.
+This other figure directly compares the SLGP MAP estimate to histograms of `medv` at selected `age` values, illustrating how well the model aligns with the observed data. Despite the small number of replicates, the SLGP estimate follows the empirical distribution, adapting to changes in shape across different 'AGE' groups. The survivor bias is again visible, as the model assigns some probability mass to higher home values for older properties.
 
 ### Influence of the lengthscale selected
 
@@ -724,7 +714,9 @@ plot1 <- df_res %>%
   labs(fill="log Posterior")+
   theme(legend.position = "bottom",
         legend.direction="horizontal")+
-  ggtitle("Trained and evaluated on full dataset.")
+  ggtitle("Trained and evaluated on full dataset.")+
+  xlab("Lengthscale for 'AGE'")+
+  ylab("Lengthscale for 'MEDV'")
 
 plot2 <- df_res %>%
   dplyr::filter(!is.na(logPostData2))%>%
@@ -737,11 +729,13 @@ plot2 <- df_res %>%
   labs(fill="log Posterior")+
   theme(legend.position = "bottom",
         legend.direction="horizontal")+
-  ggtitle("Trained on 25% of dataset, evaluated on remaining 75%")
+  ggtitle("Trained on 25% of dataset, evaluated on remaining 75%")+
+  xlab("Lengthscale for 'AGE'")+
+  ylab("Lengthscale for 'MEDV'")
 
 library(ggpubr)
 
-ggarrange(plot1, plot2)
+ggarrange(plot1, plot2, align="hv")
 ggsave(paste0("./Figures/optimLandscape",  ".pdf"), width=10, height=5)
 
 ```
@@ -807,8 +801,8 @@ pred4$Len <- "Optimised lengthscale"
 pred <- rbind(pred1, pred2, pred3, pred4)
 scale_factor <- 100
 ggplot()  +
-  labs(y = "Proportion of owner-occupied units\nbuilt prior to 1940 [%]", 
-       x = "Median value of owner-occupied homes [k$]",
+  labs(y = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
+       x = "Median value of owner-occupied homes [MEDV, k$]",
        title = "Median value vs. age of homes") +
   theme_bw()+
   geom_ribbon(data=pred,
@@ -819,9 +813,7 @@ ggplot()  +
              mapping=aes(x = medv, y = age), alpha = 0.5, color = "navy")+
   scale_fill_viridis(option = "plasma",
                      guide = guide_colorbar(nrow = 1,
-                                            title = "Indexing variable: 
-                                            Proportion of owner-occupied units built 
-                                            prior to 1940",
+                                            title = "Indexing variable: Proportion of owner-occupied units built prior to 1940",
                                             barheight = unit(2, units = "mm"),
                                             barwidth = unit(55, units = "mm"),
                                             title.position = 'top',
@@ -873,9 +865,9 @@ ggplot(mapping=aes(x = medv)) +
             color = "black", lwd=0.1, alpha=0.5)+
   geom_line(data=pred, mapping=aes(y=value, group=name, col=name), lwd=1.1)+
   facet_grid(Len ~ category, scales = "free_y") +
-  labs(x = "Median value of owner-occupied homes [k$]", 
+  labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, with width 5\nversus draws from a SLGP prior") +
+       title = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS SLGP-MAP estimators at bins centers") +
   theme_bw()+
   theme(legend.position="bottom",
         legend.direction = "horizontal",
@@ -908,7 +900,7 @@ modelLaplace <- retrainSLGP(SLGPmodel=modelPrior,
 
 Unlike MAP estimation, which provides only a point estimate, the Laplace approximation allows us to visualize uncertainty. To highlight this aspect, we compare multiple posterior draws from the approximation against histogram data, emphasizing how the estimated conditional density fluctuates. The figure below illustrates this by overlaying samples from the posterior approximation with binned data, showcasing the range of possible densities rather than focusing solely on the MAP estimate.
 
-```{r SLGPLaplaceplot, fig.cap = "Predictive probability density (and draws from a Laplace approximation) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPLaplaceplot, fig.cap = "Predictive probability density (and draws from a Laplace approximation) of 'MEDV' at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
 # Define the three selected values
 selected_values <- c(20, 50, 95)
 gap <- 5
@@ -958,9 +950,9 @@ ggplot(mapping=aes(x = medv)) +
             color = "black", lwd=0.1, alpha=0.5)+
   geom_line(data=pred, mapping=aes(y=meanpdf, group=category), color = "red")+
   facet_wrap(~ category, scales = "free_y", nrow=1) +
-  labs(x = "Median value of owner-occupied homes [k$]", 
+  labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, with width 5\nversus SLGP draws from a Laplace approximation (black curves) and average (red curve)") +
+       title = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS SLGP-Laplace draws at bins centers") +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
@@ -997,7 +989,7 @@ if(!file.exists("modelMCMC.Rdata")){
 }
 ```
 MCMC provides a rich representation of uncertainty in the estimated density. Instead of showing a single estimate, we compare multiple posterior draws against histogram data, similarly to what we did for the Laplace approximation.
-```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of medv at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplot, fig.cap = "Predictive probability density (and draws from a MCMC) of 'MEDV' at age, seen over 3 slices.", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
 # Define the three selected values
 pred <- predictSLGP_newNode(SLGPmodel=modelMCMC,
                             newNodes = dfGrid)
@@ -1020,9 +1012,9 @@ ggplot(mapping=aes(x = medv)) +
             color = "black", lwd=0.1, alpha=0.5)+
   geom_line(data=pred, mapping=aes(y=meanpdf, group=category), color = "red")+
   facet_wrap(~ category, scales = "free_y", nrow=1) +
-  labs(x = "Median value of owner-occupied homes [k$]", 
+  labs(x = "Median value of owner-occupied homes [MEDV, k$]", 
        y = "Probability density", 
-       title = "Histogram of median value at bins centered at several 'age' values, with width 5\nversus SLGP draws from a MCMC (black curves) and average (red curve)") +
+       title = "Binned 'MEDV' histograms by 'AGE' (width = 5) VS SLGP-MCMC draws at bins centers") +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
@@ -1038,7 +1030,7 @@ In our current implementation, we provide predictions for both centered and unce
 Importantly, when using probabilistic inference schemes like Laplace approximation or MCMC, the uncertainty in the SLGP predictions naturally propagates to these functionals. As a result, we can also quantify uncertainty on the functionals. For example, we compute credible intervals for the mean or variance field. This is illustrated in the upcoming figure, where we use the MCMC-trained SLGP model to compute moments.
 
 
-```{r SLGPMCMCplotMoments, fig.cap = "Simultaneous prediction of the fields moments (and associated uncertainty) using a SLGP model", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplotMoments, fig.cap = "Simultaneous prediction of the fields moments (and associated uncertainty) using a SLGP model", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
 dfX <- data.frame(age=seq(range_x[1], range_x[2], 1))
 
 predMean <- predictSLGP_moments(SLGPmodel=modelMCMC,
@@ -1082,8 +1074,8 @@ ggplot(df_plot, mapping=aes(x = age)) +
               alpha = 0.25, lty=2, col="black", fill="cornflowerblue")+
   geom_line(mapping=aes(y=q50))+
   facet_grid(.~power)+
-  labs(x = "Proportion of owner-occupied units\nbuilt prior to 1940 [AGE, %]", 
-       y = "Median value of owner-occupied homes [MEDV, k$]") +
+  labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
+       y = "Moment value") +
   theme_bw()+
   coord_cartesian(xlim=range_x,
                   ylim=range_response)
@@ -1094,7 +1086,7 @@ ggsave(paste0("./Figures/MomentsMCMC",  ".pdf"), width=10, height=4)
 We also support the joint prediction of quantiles at arbitrary levels. Because quantiles are derived directly from the estimated densities, they are guaranteed to be consistent and non-crossing - a property that cannot always be ensured in standard quantile regression. This makes them reliable tools for summarizing distributional shape (e.g., asymmetry, spread) at each location.
 
 
-```{r SLGPMCMCplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 probsL <- c(5, 25, 50, 75, 95)/100
 dfX <- data.frame(age=seq(range_x[1], range_x[2], 1))
 pred <- predictSLGP_quantiles(SLGPmodel=modelMAP,
@@ -1118,7 +1110,7 @@ plot1 <-  ggplot(pred, mapping=aes(x = age)) +
   geom_line(mapping=aes(y=qQuantileReg, lty="Quantile regression",
                         col=probs, group=probs),
             lwd=0.75)+
-  labs(x = "Proportion of owner-occupied units\nbuilt prior to 1940 [AGE, %]", 
+  labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        y = "Median value of owner-occupied homes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
@@ -1184,8 +1176,8 @@ ggplot(pred, mapping=aes(x = age)) +
   geom_segment(x=95, xend=100, y=q5, yend=q5, col=colp, lty=5, lwd=1)+
   geom_text(y=q5+0.3,x=97.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n5,")"))+
-  labs(x = "Proportion of owner-occupied units\nbuilt prior to 1940 [AGE, %]", 
-       y = "Median value of owner-occupied homes\n[MEDV, k$]",
+  labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
+       y = "Median value of owner-occupied homes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
        lty="Quantile estimation method") +
@@ -1198,7 +1190,7 @@ ggsave(file=paste0("./Figures/QuantilesMAP3",  ".pdf"), width=8, height=4)
 
 ```
 
-```{r SLGPMCMCplotQuantiles2, fig.cap = "Simultaneous quantile prediction (and associated uncertainty) using a SLGP model, with estimation performed by MCMC", fig.fullwidth=TRUE, fig.height=4, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplotQuantiles2, fig.cap = "Simultaneous quantile prediction (and associated uncertainty) using a SLGP model, with estimation performed by MCMC", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 # Define the three selected values
 
 probsL <- c(5, 25, 50, 75, 95)/100
@@ -1230,7 +1222,7 @@ plot1 <- ggplot(df_plot, mapping=aes(x = age)) +
   geom_line(mapping=aes(y=qQuantileReg, lty="Quantile regression",
                         col=probs, group=probs),
             lwd=0.75)+
-  labs(x = "Proportion of owner-occupied units\nbuilt prior to 1940 [AGE, %]", 
+  labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
        y = "Median value of owner-occupied homes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
@@ -1418,7 +1410,7 @@ for(i in seq(max(rep_list))){
 
 When the lengthscale is too small, the estimation fails to generalize effectively, leading to poor density reconstruction.
 
-```{r PlotTooSmallLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is too small", fig.fullwidth=TRUE, fig.height=3, fig.width=8, fig.align='center',fig.pos="H"}
+```{r PlotTooSmallLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is too small", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
 df_res_plot <- df_res %>%
   group_by(matpar, nFreq, len, n)%>%
   summarise(meandH=mean(dH),
@@ -1426,10 +1418,10 @@ df_res_plot <- df_res %>%
             q90=quantile(dH, probs=0.9), .groups="keep") %>%
   ungroup()%>%
   mutate(len=paste0("Lengthscale: ", 100*len,
-                    "%\n of the range"))%>%
+                    "% of the range"))%>%
   mutate(len=factor(len, levels= paste0("Lengthscale: ", 
                                         c(1, 5, 15, 50),
-                                        "%\n of the range")))%>%
+                                        "% of the range")))%>%
   mutate(matpar=ifelse(is.infinite(matpar), 
                        "RFF of Gaussian kernel", 
                        matpar))%>%
@@ -1468,7 +1460,7 @@ Indeed, with such low lengthscale, the model struggles to share information acro
 For other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
 
 
-```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
+```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H"}
 
 df_res_plot %>%
   filter(as.numeric(len) !=1 ) %>%
@@ -1491,7 +1483,7 @@ ggsave(paste0("./Figures/benchmark1",  ".pdf"), width=10, height=8)
 
 
 
-```{r PlotOtherLen2, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big. (Same results, different scale)", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
+```{r PlotOtherLen2, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big. (Same results, different scale)", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H"}
 
 df_res_plot %>%
   filter(as.numeric(len) !=1 ) %>%
@@ -1520,9 +1512,9 @@ As observed qualitatively in the MAP section, models that are too smooth (wrong 
 
 # Using SLGPs for discrete distributions
 Rather than predicting a density, one can adjust the current code to make predictions for discrete distributions.
-For that purpose, we use the Boston Housing dataset and propose modeling the distribution of rad (index of accessibility to radial highways, between 1 and 24 where 24 indicates the best accessibility and 1 the worst) as a function of age using SLGP. Since rad is an integer-valued variable, our goal is to adjust the implementation for this.
+For that purpose, we use the Boston Housing dataset and propose modeling the distribution of rad (index of accessibility to radial highways, between 1 and 24 where 24 indicates the best accessibility and 1 the worst) as a function of 'AGE' using SLGP. Since rad is an integer-valued variable, our goal is to adjust the implementation for this.
 
-```{r figureHousingDiscrete, fig.cap = "A visual representation of the dependency of the index of accessibility to radial highways on proportion of owner-occupied units constructed before 1940 in the Boston Housing dataset.", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
+```{r figureHousingDiscrete, fig.cap = "A visual representation of the dependency of the index of accessibility to radial highways on proportion of owner-occupied units constructed before 1940 in the Boston Housing dataset.", fig.fullwidth=TRUE, fig.height=3.5, fig.width=10, fig.align='center',fig.pos="H"}
 range_response <- range(df$rad)
 
 scatter_plot <- ggplot(df, aes(x = age, y = rad)) +
@@ -1543,7 +1535,7 @@ df_bar <- df %>%
   group_by(age_bin) %>%
   mutate(prop = n / sum(n))
 
-# Histogram: Distribution of med by age bin
+# Histogram: Distribution of med by 'AGE' bin
 hist_plot <- ggplot(df_bar, aes(x = rad)) +
   geom_bar(mapping=aes(y = prop), stat = "identity",
            fill = "darkgrey", color = "grey50", lwd = 0.2, alpha = 0.7)  +
@@ -1552,7 +1544,7 @@ hist_plot <- ggplot(df_bar, aes(x = rad)) +
   facet_wrap(~ age_bin, scales = "free_y", nrow=2) +
   labs(x = "Index of accessibility to radial highways [RAD]", 
        y = "Probability density", 
-       title = "Histogram of median housing values by AGE group") +
+       title = "Histogram of median housing values by 'AGE' group") +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.5))+
@@ -1568,7 +1560,7 @@ ggsave("./Figures/scatterDiscrete.pdf", width=10, height=3.5)
 We propose mapping the value 24 to 9 for rad, resulting in a more compact domain. We will compare both approaches by fitting a model on each.
 
 
-```{r figureHousing2, fig.cap ="Figure 2: Index of Accessibility to Radial Highways as a Function of Home Value and Distance to Employment Centers, with rescaled indices", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
+```{r figureHousing2, fig.cap ="Figure 2: Index of Accessibility to Radial Highways as a Function of Home Value and Distance to Employment Centers, with rescaled indices", fig.fullwidth=TRUE, fig.height=3.5, fig.width=10, fig.align='center',fig.pos="H"}
 
 df$rad2 <- ifelse(df$rad==24, 9, df$rad) 
 range_response2 <- range(df$rad2)
@@ -1591,7 +1583,7 @@ df_bar2 <- df %>%
   group_by(age_bin) %>%
   mutate(prop = n / sum(n))
 
-# Histogram: Distribution of rad by age bin
+# Histogram: Distribution of rad by 'AGE' bin
 hist_plot <- ggplot(df_bar2, aes(x = rad2)) +
   geom_bar(mapping=aes(y = prop), stat = "identity",
            fill = "darkgrey", color = "grey50", lwd = 0.2, alpha = 0.7)  +
@@ -1600,7 +1592,7 @@ hist_plot <- ggplot(df_bar2, aes(x = rad2)) +
   facet_wrap(~ age_bin, scales = "free_y", nrow=2) +
   labs(x = "Index of accessibility to radial highways [RAD]", 
        y = "Probability density", 
-       title = "Histogram of median housing values by AGE group") +
+       title = "Histogram of median housing values by 'AGE' group") +
   theme_bw()+
   coord_cartesian(xlim=range_response2,
                   ylim=c(0, 0.5))+
@@ -1652,7 +1644,7 @@ modelMAPdisc2 <- slgp(rad2~age, # Use a formula with two indexing variables
 We can represent the conditional probabilities. For that, we use bins for the samples, as there are not enough replicates for other visualisations. We display the histograms of values in these bins compared to SLGP predictions of the probabilities at the center of the bins.
 
 
-```{r SLGPplottingdisc1, fig.cap = "Figure 2: Predictive probabilities of rad at medv and dis, as predicted by a SLGP.", fig.fullwidth=TRUE, fig.height=6, fig.width=8, fig.align='center',fig.pos="H"}
+```{r SLGPpreddisc1}
 library(viridis)
 dfGrid <- data.frame(expand.grid(seq(10),  
                                  seq(range_response[1],
@@ -1693,8 +1685,8 @@ ggplot() +
            sides = "b", color = "navy", alpha = 0.5) +
   facet_wrap(~ age_bin, scales = "free_y", nrow=2) +
   labs(x = "Index of accessibility to radial highways [RAD]", 
-       y = "Probability density", 
-       title = "Distribution of RAD across bins of various AGE values (blue histogram)\nVS SLGP at the center of these bins (red bars)") +
+       y = "Probability", 
+       title = "Binned 'RAD' histograms by 'AGE' (blue bars) VS SLGP-MAP estimators at bins centers (red hashed bars)") +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.5))+
@@ -1719,8 +1711,8 @@ ggplot() +
            sides = "b", color = "navy", alpha = 0.5) +
   facet_wrap(~ age_bin, scales = "free_y", nrow=2) +
   labs(x = "Index of accessibility to radial highways [RAD]", 
-       y = "Probability density", 
-       title = "Distribution of RAD across bins of various AGE values (blue histogram)\nVS SLGP at the center of these bins (red bars)") +
+       y = "Probability", 
+       title = "Binned 'RAD' histograms by 'AGE' (blue bars) VS SLGP-MAP estimators at bins centers (red hashed bars)") +
   theme_bw()+
   coord_cartesian(xlim=range_response2,
                   ylim=c(0, 0.5))+
