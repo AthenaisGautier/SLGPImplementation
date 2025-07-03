@@ -1132,9 +1132,9 @@ modelMAP4 &lt;- retrainSLGP(SLGPmodel=modelPrior,
                                           lengthscale=c(min2$l_medv, min2$l_age)),
                          sigmaEstimationMethod=&quot;heuristic&quot;)
 gc()
-#&gt;           used  (Mb) gc trigger  (Mb) max used  (Mb)
-#&gt; Ncells 2322708 124.1    4869412 260.1  4869412 260.1
-#&gt; Vcells 6831054  52.2   23723144 181.0 29653929 226.3</code></pre>
+#&gt;           used  (Mb) gc trigger  (Mb) max used (Mb)
+#&gt; Ncells 2343274 125.2    4867237 260.0  4867237  260
+#&gt; Vcells 6625604  50.6   23799205 181.6 29749006  227</code></pre>
 <p>This results in the following fitted densities:</p>
 <pre class="r"><code>dfGrid &lt;- data.frame(expand.grid(seq(range_x[1], range_x[2], 5), 
                                  seq(range_response[1], range_response[2],, 101)))
