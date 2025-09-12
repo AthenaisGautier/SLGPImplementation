@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides a practical introduction to Spatial Logistic Gaussian Process (SLGP) modeling, demonstrating its implementation and application.. 
+This vignette provides a practical introduction to Spatial Logistic Gaussian Process (SLGP) modeling, demonstrating its implementation and application.
 
 # Dataset
 We illustrate the model's capabilities using the Boston Housing dataset @harrison_hedonic_1978, a well-known benchmark in statistical modeling and regression analysis. 
@@ -81,7 +81,7 @@ ggsave("./Figures/scatter.pdf", width=10, height=3.5)
 
 We see that there is a general trend where older homes tend to have lower values, with exceptions likely due to survivor bias: older homes that persist tend to be of higher structural quality. This dataset provides an test case for SLGP modeling, offering a compact, one-dimensional covariate space, heterogeneously distributed data, and shifting distributional shapes.
 
-# SLGP model specifications
+# SLGP model specification
 
 To model the distributional changes observed in the Boston Housing dataset, we now introduce the Spatial Logistic Gaussian Process (SLGP) model. SLGPs provide a flexible non-parametric framework for modeling spatially dependent probability densities. By transforming a Gaussian Process (GP) through exponentiation and normalization, SLGPs ensure positivity and integration to one, making them well-suited for density estimation.
 In this section, we specify the SLGP prior, and visualise its behaviour.
@@ -172,7 +172,7 @@ ggsave(paste0("./Figures/ribbonsPrior",  ".pdf"), width=10, height=5)
 
 ```
 
-This figure illustrates how the SLGP prior encodes a distribution over densities for different 'AGE' values. The wide variability indicates the flexibility of SLGPs.
+This figure illustrates how the SLGP prior encodes a distribution over densities for different `age` values. The wide variability indicates the flexibility of SLGPs.
 
 ### Assessing whether the flexibility matches that of the data
 
@@ -227,7 +227,7 @@ ggplot(mapping=aes(x = medv)) +
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
 
-ggsave(paste0("./Figures/histPrior",  ".pdf"), width=10, height=4)
+ggsave(paste0("./Figures/histPrior",  ".pdf"), width=10, height=3.5)
 
 ```
 
@@ -496,9 +496,9 @@ modelMAP <- slgp(medv~age,
 
 The estimated conditional density function is displayed using two different representations:
 
-* A colormap showing the predicted density of 'MEDV' as a function of age.
+* A colormap showing the predicted density of `medv` as a function of `age`.
 
-* A ribbon plot, which slices the conditional density at selected 'AGE' values to provide a clearer view of the estimated distributions.
+* A ribbon plot, which slices the conditional density at selected `age` values to provide a clearer view of the estimated distributions.
 
 ```{r SLGPplotting1, fig.cap = "Predictive probability density of 'MEDV' at 'AGE', as predicted by a SLGP.", fig.fullwidth=TRUE, fig.height=6, fig.width=6, fig.align='center',fig.pos="H"}
 dfGrid <- data.frame(expand.grid(seq(range_x[1], range_x[2],, 101), 
@@ -563,6 +563,7 @@ ggplot()  +
 ggsave(paste0("./Figures/ribbonsMAP",  ".pdf"), width=10, height=5)
 
 ```
+
 The figure reveals how the SLGP captures the structure in the estimated conditional density of `medv` given `age`. It effectively adapts to variations in skewness as the distribution of home prices shifts across different property ages. Notably, the model also captures the survivor bias we noted earlier by assigning a small but notable probability mass to older units with high values.
 
 ### Comparing the estimation to data
@@ -617,12 +618,12 @@ ggplot(mapping=aes(x = medv)) +
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
 
-ggsave(paste0("./Figures/histMAP",  ".pdf"), width=10, height=4)
+ggsave(paste0("./Figures/histMAP",  ".pdf"), width=10, height=3.5)
 
 ```
 
 
-This other figure directly compares the SLGP MAP estimate to histograms of `medv` at selected `age` values, illustrating how well the model aligns with the observed data. Despite the small number of replicates, the SLGP estimate follows the empirical distribution, adapting to changes in shape across different 'AGE' groups. The survivor bias is again visible, as the model assigns some probability mass to higher home values for older properties.
+This other figure directly compares the SLGP MAP estimate to histograms of `medv` at selected `age` values, illustrating how well the model aligns with the observed data. Despite the small number of replicates, the SLGP estimate follows the empirical distribution, adapting to changes in shape across different `age` groups. The survivor bias is again visible, as the model assigns some probability mass to higher home values for older properties.
 
 ### Influence of the lengthscale selected
 
@@ -881,7 +882,8 @@ We observe that when the lengthscale is too big, while the model captures the ge
 On the opposite using too small a length scale restricts the model’s spatial aggregation, limiting the reach of spatial information to a very local scope.
 
 Using a heuristic as before, or the optimised version yield a compromise between the previously observed limitations.
-For simplicity, we will continue with the lengthscales yielded by the heuristic, set to 15% of the ranges.
+For simplicity, we will continue with the lengthscales yielded by the heuristic, set to 15% of the ranges. A more quantitative study on the impact of this hyperparameter on SLGP estimation is presented in a subsequent section.
+
 
 ## Laplace approximation estimate
 
@@ -956,7 +958,7 @@ ggplot(mapping=aes(x = medv)) +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
-ggsave(paste0("./Figures/histLap",  ".pdf"), width=10, height=4)
+ggsave(paste0("./Figures/histLap",  ".pdf"), width=10, height=3.5)
 
 ```
 
@@ -1018,7 +1020,7 @@ ggplot(mapping=aes(x = medv)) +
   theme_bw()+
   coord_cartesian(xlim=range_response,
                   ylim=c(0, 0.2))
-ggsave(paste0("./Figures/histMCMC",  ".pdf"), width=10, height=4)
+ggsave(paste0("./Figures/histMCMC",  ".pdf"), width=10, height=3.5)
 ```
 
 # By-products of the estimation
@@ -1078,15 +1080,15 @@ ggplot(df_plot, mapping=aes(x = age)) +
        y = "Moment value") +
   theme_bw()+
   coord_cartesian(xlim=range_x,
-                  ylim=range_response)
-ggsave(paste0("./Figures/MomentsMCMC",  ".pdf"), width=10, height=4)
+                  ylim=c(-3, 30))
+ggsave(paste0("./Figures/MomentsMCMC",  ".pdf"), width=8, height=3)
 
 ```
 
 We also support the joint prediction of quantiles at arbitrary levels. Because quantiles are derived directly from the estimated densities, they are guaranteed to be consistent and non-crossing - a property that cannot always be ensured in standard quantile regression. This makes them reliable tools for summarizing distributional shape (e.g., asymmetry, spread) at each location.
 
 
-```{r SLGPMCMCplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPMAPplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
 probsL <- c(5, 25, 50, 75, 95)/100
 dfX <- data.frame(age=seq(range_x[1], range_x[2], 1))
 pred <- predictSLGP_quantiles(SLGPmodel=modelMAP,
@@ -1111,7 +1113,7 @@ plot1 <-  ggplot(pred, mapping=aes(x = age)) +
                         col=probs, group=probs),
             lwd=0.75)+
   labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
-       y = "Median value of owner-occupied homes [MEDV, k$]",
+       y = "Median value of owner-occupied\nhomes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
        lty="Quantile estimation method") +
@@ -1125,7 +1127,7 @@ plot2 <- ggplot(df, mapping=aes(x=age))+
                  breaks=seq(0, 100, 5))+
   theme_minimal()+
   labs(x = NULL, 
-       y = "Sample count") 
+       y = "Sample\ncount") 
 library(ggpubr)
 p_with_marginal <- ggarrange(
   plot2, plot1,
@@ -1134,8 +1136,8 @@ p_with_marginal <- ggarrange(
 )
 
 print(p_with_marginal)
-ggsave(plot1, file=paste0("./Figures/QuantilesMAP1",  ".pdf"), width=10, height=5)
-ggsave(p_with_marginal, file=paste0("./Figures/QuantilesMAP2",  ".pdf"), width=10, height=5)
+ggsave(plot1, file=paste0("./Figures/QuantilesMAP1",  ".pdf"), width=8, height=4)
+ggsave(p_with_marginal, file=paste0("./Figures/QuantilesMAP2",  ".pdf"), width=8, height=4)
 ```
 There is a slight disagreement between both methods for the 95% quantile and $age \geq 75$.
 
@@ -1157,35 +1159,45 @@ n5 <- sum(df$age > 95 & df$age <= 100)
 colp <- hue_pal()(5)[5]
 ggplot(pred, mapping=aes(x = age)) +
   geom_line(mapping=aes(y=qSLGP_1, lty="SLGP", 
-                        col=probs,group=probs), lwd=0.75)+
+                        col=probs, group=probs), lwd=0.75)+
   geom_line(mapping=aes(y=qQuantileReg, lty="Quantile regression",
                         col=probs, group=probs),
             lwd=0.75)+
-  geom_segment(x=75, xend=80, y=q1, yend=q1, col=colp, lty=5, lwd=1)+
+  geom_segment(mapping=aes(x=75, xend=80, y=q1, yend=q1, 
+                           lty="Empirical quantile on bin",
+                           col="Quantile: 95%"), lwd=1)+
   geom_text(y=q1+0.3,x=77.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n1,")"))+
-  geom_segment(x=80, xend=85, y=q2, yend=q2, col=colp, lty=5, lwd=1)+
+  geom_segment(mapping=aes(x=80, xend=85, y=q2, yend=q2, 
+                           lty="Empirical quantile on bin",
+                           col="Quantile: 95%"), lwd=1)+
   geom_text(y=q2+0.3,x=82.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n2,")"))+
-  geom_segment(x=85, xend=90, y=q3, yend=q3, col=colp, lty=5, lwd=1)+
+  geom_segment(mapping=aes(x=85, xend=90, y=q3, yend=q3, 
+                           lty="Empirical quantile on bin",
+                           col="Quantile: 95%"), lwd=1)+
   geom_text(y=q3+0.3,x=87.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n3,")"))+
-  geom_segment(x=90, xend=95, y=q4, yend=q4, col=colp, lty=5, lwd=1)+
+  geom_segment(mapping=aes(x=90, xend=95, y=q4, yend=q4, 
+                           lty="Empirical quantile on bin",
+                           col="Quantile: 95%"), lwd=1)+
   geom_text(y=q4+0.3,x=92.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n4,")"))+
-  geom_segment(x=95, xend=100, y=q5, yend=q5, col=colp, lty=5, lwd=1)+
+  geom_segment(mapping=aes(x=95, xend=100, y=q5, yend=q5, 
+                           lty="Empirical quantile on bin",
+                           col="Quantile: 95%"), lwd=1)+
   geom_text(y=q5+0.3,x=97.5,  hjust=0.5, color="darkgrey",
             label=paste0("(n=", n5,")"))+
   labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
-       y = "Median value of owner-occupied homes [MEDV, k$]",
+       y = "Median value of owner-occupied\nhomes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
-       lty="Quantile estimation method") +
+       lty= "Quantile estimation method") +
   theme_bw()+
-  scale_linetype_manual(values=c(2, 1))+
+  scale_linetype_manual(values=c(3, 2, 1))+
   coord_cartesian(xlim=c(75, 100),
                   ylim=c(37.5, 50))
-ggsave(file=paste0("./Figures/QuantilesMAP3",  ".pdf"), width=8, height=4)
+ggsave(file=paste0("./Figures/QuantilesMAP3",  ".pdf"), width=8, height=3)
 
 
 ```
@@ -1223,7 +1235,7 @@ plot1 <- ggplot(df_plot, mapping=aes(x = age)) +
                         col=probs, group=probs),
             lwd=0.75)+
   labs(x = "Proportion of owner-occupied units built prior to 1940 [AGE, %]", 
-       y = "Median value of owner-occupied homes [MEDV, k$]",
+       y = "Median value of owner-occupied\nhomes [MEDV, k$]",
        fill = "Quantile levels",
        col = "Quantile levels", 
        lty="Quantile estimation method") +
@@ -1240,278 +1252,856 @@ p_with_marginal <- ggarrange(
 
 # Display the plot
 print(p_with_marginal)
-ggsave(plot1, file=paste0("./Figures/QuantilesMCMC1",  ".pdf"), width=10, height=5)
-ggsave(p_with_marginal, file=paste0("./Figures/QuantilesMCMC2",  ".pdf"), width=10, height=5)
+ggsave(plot1, file=paste0("./Figures/QuantilesMCMC1",  ".pdf"), width=10, height=4)
+ggsave(p_with_marginal, file=paste0("./Figures/QuantilesMCMC2",  ".pdf"), width=8, height=4)
 
 ```
 
 
-# Impact of various parameters on the quality of the estimation
+# Asymptotic behaviours
 
 To assess the quality of SLGP-based density field estimation, we first define a reference field using the MAP estimate, which serves as the ground truth. We then generate synthetic data from this reference field and compare different estimation setups to evaluate their impact on accuracy.
 
+## Experiment description
 
-For each tested configuration, we compute the estimation error, comparing the inferred density field to the reference field. This allows us to measure the effect of different modeling choices. We investigate the impact of the following factors:
+We explore three main experimental factors, and for each setting we replicate the experiment 10 times with several seeds to account for randomness:
 
-* Incorrect hyperparameters: Using suboptimal lengthscale to quantify the effect of poor prior specification.
-* Incorrect smoothness assumption: Comparing inference under a Matérn kernel versus an Exponential kernel.
-* Data quantity: Evaluating performance when using fewer or more data points, reflecting real-world data availability constraints.
-* Number of basis functions: Exploring the trade-off between approximation accuracy and computational efficiency when reducing or increasing the number of basis functions.
+* 1. Number of Basis Functions : This experiment evaluates the impact of the number of Random Fourier Features (RFFs). A larger number of basis functions is expected to improve accuracy but increase computational cost.
+This setup allows us to study the approximation error induced by using a finite number of basis functions and assess the trade-off between speed and expressiveness.
+
+*2. Length-scale Misspecification: This experiment, we test the sensitivity of SLGP estimation to various specification of the length-scale hyperparameter. We train models using different length-scales. We consider length-scale that are too small: 0.01, 0.05; well-specified: 0.15; or too large: 0.25, 0.5.
+This analysis highlights the consequences of hyper-parameter selection.
+
+* 3. Sampling Schemes (Experiment 3)
+This experiment investigates how the spatial structure of the data affects the quality of estimation. We vary the sampling scheme across different types: Uniform random sampling for the $\xX$; Points clustered around a few modes (with 5, 11, or 21 modes), "Hole-y" Uniform random sampling with two censored regions (we remove data-points with medv in $[10, 20]$ and $[60, 80]$).
+These variations reveal the method’s ability to generalise in poorly observed regions.
+
 This analysis provides practical insights into how SLGP estimation behaves under different conditions, guiding model selection for real applications.
 
 
-In order to quantify the prediction error for different configurations, we define an Integrated Hellinger distance to measure dissimilarity between two probability density valued fields $f(x, \cdot)$ and $f'(x, \cdot)$:
-
-$$
-d_{IH}^2(f , f' ) = \frac{1}{2}\int_D \int_T \left( \sqrt{f(\mathbf{v}, u)} - \sqrt{f'(\mathbf{v}, u))}  \right)^2 \,du \,d\mathbf{v}
-$$
-We first generate 10 different samples from the reference field.
-
 ```{r}
-len_list <- c(0.01, 0.05, 0.15, 0.5)
-n_list <- c(5, 25, 100, 
-            250, 500, 1000, 
-            2500, 5000, 10000, 
-            25000, 50000, 100000)
-nFreq_list <- c(10, 50, 100, 200, 500)
-matpar_list <- c(1/2, 5/2, Inf)
-rep_list <- seq(10)
+modelRef <- modelMAP
+range_response <- c(0, 50) 
+range_x <- c(0, 100) 
 
+n_list <- c(10, 25, 50, 
+            100, 250, 500, 
+            1000, 2500, 5000, 
+            10000, 25000, 50000,
+            100000)
 
-for(i in seq(max(rep_list))){
-  title <- paste0("./res/samp_", i, ".Rdata")
-  samp <- data.frame()
-  if(!(file.exists(title))){
-    for(slice in seq(10)){  
-      cat("Rep", i, "slice", slice, "/10\n")
-      set.seed(i*1000*slice)
-      newX <- data.frame(age=runif(max(n_list)/10, range_x[1], range_x[2]))
-      temp <- sampleSLGP(modelMAP, 
-                         newX = newX, 
-                         n=1, 
-                         interpolateBasisFun = "WNN")
-      samp <- rbind(samp, temp)
+config1 <- expand.grid(1, c(25, 50, 100, 200, 300),
+                       seq(25), 0, 0.15, "Unif")
+config2 <- expand.grid(2, 200, 
+                       1, seq(25), c(0.01, 0.05, 0.15, 0.25, 0.5), "Unif")
+config3 <- expand.grid(3, 200, 
+                       1, seq(25), 0.15, c("Unif", "Clustered", 
+                                           "Clustered2",  "Clustered3",
+                                           "Hole-y"))
+colnames(config1) <-
+  colnames(config2) <-
+  colnames(config3) <- c("Scenario", "nFreq", "SeedFreq", 
+                         "SeedSamples", "lengthscale", "Sampling")
+config1$SeedSamples <- config1$SeedFreq
+config <- rbind(config1, config2, config3)
+config <- config[, c("Scenario", "Sampling", "SeedSamples",  
+                     "nFreq", "SeedFreq", "lengthscale")]
+```
+
+## Evaluation of the performances
+
+For each tested configuration, we compute the estimation error, comparing the inferred density field to the reference field. This allows us to measure the effect of different modeling choices.To assess the similarity between estimated and true distributions, we compute several integrated distances based on both the probability density functions (PDFs) and the cumulative distribution functions (CDFs). 
+
+The considered distances are defined for a distribution $P_1$ that admits a pdf $f_1$ and cdf $F_1$ and a distribution $P_2$ that admits a pdf $f_2$ and cdf $F_2$ as:
+* Hellinger Distance $d_H(f_1, f_2) = \sqrt{\frac{1}{2} \int \left( \sqrt{f_1(t)} - \sqrt{f_2(t)} \right)^2 dt}$
+* Total Variation Distance $TV(f_1, f_2) = \frac{1}{2} \int \left| f_1(t) - f_2(t) \right| \,dt$
+* Kullback–Leibler Divergence $KL(f_1, f_2) = \int f_1(t) \log \left( \frac{f_1(t)}{f_2(t)} \right) dt $
+* Wasserstein-1 Distance $W_1(F_1, F_2) = \int \left| F_1(t) - F_2(t) \right| dt$
+* Kolmogorov–Smirnov Distance: $KS(F_1, F_2) = \sup_t \left| F_1(t) - F_2(t) \right|$
+* Cramér–von Mises Distance:  $CvM(F_1, F_2) = \int \left( F_1(t) - F_2(t) \right)^2 f_1(t) \, dt$ for the $P_1$-weighted version
+$CvM_{\text{sym}}(F_1, F_2) = \int \left( F_1(t) - F_2(t) \right)^2 dt$ for the unweighted version.
+
+These metrics are evaluated across a grid of values and provide different perspectives on the quality of the density estimation.
+
+## Code for the experiment
+
+We generate multiple synthetic datasets from the reference field to evaluate model performance under each experimental scenario. To reduce memory usage, data generation is performed in slices.
+
+```{r eval=FALSE}
+n <- max(n_list)
+
+for(strat in unique(config$Sampling)){
+  for(SeedSamples in sort(unique(config$SeedSamples))){
+    #cat("Strategy ", strat, " Seed ", SeedSamples, "\n")
+    title <- paste0("./res/samp_", strat, "_num_", SeedSamples, ".Rdata")
+    samp <- data.frame()
+    if(strat == "Hole-y"){
+      title2 <- paste0("./res/samp_", "Unif", 
+                       "_num_", SeedSamples, ".Rdata")
+      load(title2)
+      samp <- samp[abs(samp$age-15)>=5 & abs(samp$age-70)>=10, ]
+      samp <- samp[1:50000, ]      
+      save(samp, file=title)
     }
-    save(samp, file=title)
-    gc()
-    
-    
+    if(!(file.exists(title))){
+      for(slice in seq(25)){  
+        cat("Strategy ", strat, " Seed ", 
+            SeedSamples, "slice", slice, "/25\n")
+        set.seed(SeedSamples*1000+slice)
+        if(strat == "Unif"){
+          newX <- data.frame(age=runif(n/25, range_x[1], range_x[2]))
+          nsamp=1
+        }
+        if(strat == "Clustered"){
+          x <- sample(seq(range_x[1], range_x[2],, 21), 
+                      size=n/25, replace=T)
+          t <- table(x)
+          newX <- data.frame(age=as.numeric(names(t)))
+          nsamp <- as.vector(t)
+        }
+        if(strat == "Clustered2"){
+          x <- sample(seq(range_x[1], range_x[2],, 11), 
+                      size=n/25, replace=T)
+          t <- table(x)
+          newX <- data.frame(age=as.numeric(names(t)))
+          nsamp <- as.vector(t)
+        }
+        if(strat == "Clustered3"){
+          x <- sample(seq(range_x[1], range_x[2],, 5), 
+                      size=n/25, replace=T)
+          t <- table(x)
+          newX <- data.frame(age=as.numeric(names(t)))
+          nsamp <- as.vector(t)
+        }
+        temp <- sampleSLGP(modelMAP, 
+                           newX = newX, 
+                           n=nsamp, 
+                           interpolateBasisFun = "WNN")
+        samp <- rbind(samp, temp[sample(seq(nrow(temp))), ])
+      }
+      save(samp, file=title)
+      gc()
+    }
   }
 }
 
 ```
 
-And then run the density estimations with different parameters on these samples.
+Next, we fit SLGP models to these synthetic datasets using varying hyperparameters and configurations to assess how different modeling choices impact estimation quality.
 
 ```{r eval=FALSE}
 dfGrid <- data.frame(expand.grid(seq(range_x[1], range_x[2],, 101), 
                                  seq(range_response[1], range_response[2],, 101)))
 colnames(dfGrid) <- c("age", "medv")
+dt <- diff(sort(unique(dfGrid$medv))[1:2])
 predRef <- predictSLGP_newNode(SLGPmodel=modelMAP,
                                newNodes = dfGrid)
+predRefCDF <- predictSLGP_cdf(SLGPmodel=modelMAP,
+                              newNodes = dfGrid)
+predRefCDF <- round(predRefCDF, 15)
+df_compute <- predRef
+colnames(df_compute)[3] <- "TruePDF"
+df_compute$TrueCDF <- predRefCDF$cdf_1
+df_compute$TruePDFsafe <- df_compute$TruePDF + 1e-15
+rm(predRefCDF, predRef)
 
-for(i in seq(max(rep_list))){
-  set.seed(i)
-  title <- paste0("./res/samp_", i, ".Rdata")
-  load(file=title)
-  for(matpar in matpar_list){
-    for(nFreq in nFreq_list){
-      title2 <- paste0("./res/SLGP_Mat_", matpar*2, 
-                       "half_nFreq_", nFreq,
-                       "_rep_", i, ".Rdata")
-      if(!file.exists(title2)){
-        modelCurrent <- slgp(medv~age, 
-                             data=samp[1:5, ],
-                             method="none", 
-                             basisFunctionsUsed = "RFF",
-                             interpolateBasisFun="WNN", 
-                             sigmaEstimationMethod = "heuristic", 
-                             predictorsLower= c(range_x[1]),
-                             predictorsUpper= c(range_x[2]),
-                             responseRange= range_response,
-                             opts_BasisFun = list(nFreq=nFreq,
-                                                  MatParam=matpar),
-                             seed=i)
-        save(modelCurrent, file=title2)
-        cat("Created and saved model ", title2, "\n")
+pb <- txtProgressBar(min = 0, max = nrow(config), style = 3)
+
+
+for(i in seq(nrow(config))){
+  Scenario <- config$Scenario[i]
+  nFreq <- config$nFreq[i]
+  SeedFreq <- config$SeedFreq[i]
+  SeedSamples <- config$SeedSamples[i]
+  lengthscale <- config$lengthscale[i]
+  Sampling <- config$Sampling[i]
+  
+  title <- paste0("./res/samp_", Sampling, "_num_",
+                  SeedSamples, ".Rdata")
+  if(file.exists(title)){
+    
+    load(file=title)
+    
+    set.seed(SeedFreq)
+    title2 <- paste0("./res/SLGP_len_", 100*lengthscale,
+                     "_nFreq_", nFreq,
+                     "_rep_", SeedFreq, ".Rdata")
+    if(!file.exists(title2)){
+      modelCurrent <- slgp(medv~age, 
+                           data=samp[1:n_list[1], ],
+                           method="none", 
+                           basisFunctionsUsed = "RFF",
+                           interpolateBasisFun="WNN", 
+                           hyperparams = list(lengthscale=c(lengthscale,
+                                                            lengthscale), 
+                                              sigma2=1), 
+                           sigmaEstimationMethod = "heuristic", 
+                           predictorsLower= c(range_x[1]),
+                           predictorsUpper= c(range_x[2]),
+                           responseRange= range_response,
+                           opts_BasisFun = list(nFreq=nFreq,
+                                                MatParam=5/2),
+                           seed=SeedFreq)
+      save(modelCurrent, file=title2)
+      cat("\nCreated and saved model ", title2, "\n")
+    }else{
+      load(title2)
+    }
+    title3 <- paste0("./res/strat_", Sampling,
+                     "_SLGP_nFreq_", nFreq,
+                     "_seedFreq_", SeedFreq, 
+                     "_len_", lengthscale*100, "%",
+                     "_rep_", SeedSamples, ".Rdata")
+    
+    if(!file.exists(title3)){
+      d_list <- data.frame()
+      if(Sampling=="Hole-y"){
+        n_list2 <- n_list[1:(length(n_list)-1)]
       }else{
-        load(title2)
+        n_list2 <- n_list
       }
-      for(len in len_list){
-        title3 <- paste0("./res/Mat_", matpar*2, 
-                         "half_nFreq_", nFreq,
-                         "_len_", len*100, "%",
-                         "_rep_", i, ".Rdata")
-        modelCurrent@hyperparams$lengthscale <- c(len, len)
-        if(!file.exists(title3) | i==1 & nFreq==100){
-          dH_list <- rep(NA, length(n_list))
-          for(j in seq_along(n_list)){
-            cat(".")
-            n <- n_list[j]
-            modelCurrent <- retrainSLGP(SLGPmodel=modelCurrent, 
-                                        newdata = samp[1:n, ], 
-                                        method="MAP")
-            predTemp <- predictSLGP_newNode(SLGPmodel=modelCurrent,
-                                            newNodes = dfGrid)
-            dH <- sqrt(mean((sqrt(predRef$pdf_1)-sqrt(predTemp$pdf_1))^2)*
-                         diff(range_x)*diff(range_response))
-            dH_list[j]  <- dH
-            if(i==1 & nFreq==100 & n==100){
-              mod1 <- modelCurrent
-            }
-            if(i==1 & nFreq==100 & n==10000){
-              mod2 <- modelCurrent
-            }
-          }
-          if(i==1 & nFreq==100){
-            save(dH_list, mod1, mod2, file=title3)
-          }else{
-            save(dH_list, file=title3)
-          }
-          cat("Did ", title3, "\n")
-          gc()
-        }
+      for(j in seq_along(n_list2)){
+        start_time <- Sys.time()
+        cat(".")
+        n <- n_list2[j]
+        modelCurrent <- retrainSLGP(SLGPmodel=modelCurrent, 
+                                    newdata = samp[1:n, ], 
+                                    method="MAP", 
+                                    sigmaEstimationMethod = "heuristic")
+        predTemp <- predictSLGP_newNode(SLGPmodel=modelCurrent,
+                                        newNodes = dfGrid)
+        predTempCDF <- predictSLGP_cdf(SLGPmodel=modelCurrent,
+                                       newNodes = dfGrid)
+        predTempCDF <- round(predTempCDF, 15)
+        df_compute$estPDF <- predTemp$pdf_1
+        df_compute$estPDFsafe <- df_compute$estPDF + 1e-15
+        df_compute$estCDF <- predTempCDF$cdf_1
+        
+        ggplot(df_compute, mapping=aes(x=age, y=medv, fill=TruePDF-estPDF))+
+          geom_raster()+theme_bw()+scale_fill_viridis(limits = c(-0.12, 0.12))+        labs(fill="pdf")
+        
+        distances <- df_compute %>%
+          group_by(age)%>%
+          summarise(H=sqrt(0.5* dt*
+                             sum((sqrt(estPDF) - sqrt(TruePDF))^2)),
+                    TV = 0.5 * sum(abs(estPDF - TruePDF)) * dt,
+                    KL_TE = sum(TruePDFsafe * 
+                                  log(TruePDFsafe / estPDFsafe)) * dt,
+                    KL_ET = sum(estPDFsafe * 
+                                  log(estPDFsafe / TruePDFsafe)) * dt,
+                    W1 = sum(abs(TrueCDF - estCDF)) * dt,
+                    KS = max(abs(TrueCDF - estCDF)),
+                    CvM =  sum((TrueCDF - estCDF)^2 * TruePDF) * dt,
+                    CvMsym =  sum((TrueCDF - estCDF)^2) * dt)%>%
+          data.frame()
+        distances$n <- n
+        end_time <- Sys.time()
+        diff_minutes <- as.numeric(difftime(end_time, start_time, units = "mins"))
+        distances$time <- diff_minutes 
+        
+        d_list <- rbind(d_list, distances)
       }
+      
+      save(d_list, file=title3)
+      cat(title3, "(",round(sum(d_list$time)/101, 2),  "m)\n")
+      setTxtProgressBar(pb, i)  # Update progress
+      gc()
     }
   }
+  
 }
-
+close(pb)
 
 
 ```
 
-we concatenate the results and are ready to visualise them.
+
+Finally, we combine all results into a single data frame, which is then ready for downstream analysis and visualization.
+
 ```{r}
 df_res <- data.frame()
 
-for(i in seq(max(rep_list))){
-  for(matpar in matpar_list){
-    for(nFreq in nFreq_list){
-      for(len in len_list){
-        title3 <- paste0("./res/Mat_", matpar*2, 
-                         "half_nFreq_", nFreq,
-                         "_len_", len*100, "%",
-                         "_rep_", i, ".Rdata")
-        if(file.exists(title3)){
-          load(file=title3)
-          temp <- data.frame(matpar=matpar,
-                             nFreq=nFreq,
-                             len=len,
-                             n=n_list, 
-                             dH=dH_list, 
-                             rep=i)
-          df_res <- rbind(df_res, temp)
-        }
-      }
-    }
+for(i in seq(nrow(config))){
+  Scenario <- config$Scenario[i]
+  nFreq <- config$nFreq[i]
+  SeedFreq <- config$SeedFreq[i]
+  SeedSamples <- config$SeedSamples[i]
+  lengthscale <- config$lengthscale[i]
+  Sampling <- config$Sampling[i]
+  title3 <- paste0("./res/strat_", Sampling,
+                   "_SLGP_nFreq_", nFreq,
+                   "_seedFreq_", SeedFreq, 
+                   "_len_", lengthscale*100, "%",
+                   "_rep_", SeedSamples, ".Rdata")
+  
+  if(file.exists(title3)){
+    load(file=title3)
+    
+    temp <- data.frame(Scenario=Scenario,
+                       nFreq=nFreq,
+                       SeedFreq=SeedFreq,
+                       SeedSamples=SeedSamples,
+                       lengthscale=lengthscale,
+                       Sampling=Sampling)
+    if(!is.null(d_list$nFreq)){ d_list$nFreq <- NULL}
+    temp <- cbind(temp, d_list)
+    df_res <- rbind(df_res, temp)
   }
 }
-```
-
-When the lengthscale is too small, the estimation fails to generalize effectively, leading to poor density reconstruction.
-
-```{r PlotTooSmallLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is too small", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H"}
-df_res_plot <- df_res %>%
-  group_by(matpar, nFreq, len, n)%>%
-  summarise(meandH=mean(dH),
-            q10=quantile(dH, probs=0.1),
-            q90=quantile(dH, probs=0.9), .groups="keep") %>%
+df_res <- df_res %>%
+  group_by(Scenario, nFreq, SeedFreq, SeedSamples, lengthscale, Sampling)%>%
+  mutate(time=ifelse(var(time)<=1e-15, NA, time)) %>%
   ungroup()%>%
-  mutate(len=paste0("Lengthscale: ", 100*len,
-                    "% of the range"))%>%
-  mutate(len=factor(len, levels= paste0("Lengthscale: ", 
-                                        c(1, 5, 15, 50),
-                                        "% of the range")))%>%
-  mutate(matpar=ifelse(is.infinite(matpar), 
-                       "RFF of Gaussian kernel", 
-                       matpar))%>%
-  mutate(matpar=ifelse(matpar==0.5, 
-                       "RFF of exponential kernel", 
-                       matpar))%>%
-  mutate(matpar=ifelse(matpar==2.5, 
-                       "RFF of Matérn 5/2 kernel", 
-                       matpar))%>%
-  mutate(matpar=factor(matpar, levels= paste0("RFF of ",
-                                              c("exponential",
-                                                "Matérn 5/2",
-                                                "Gaussian"),
-                                              " kernel")))%>%
   data.frame()
-df_res_plot %>%
-  filter(as.numeric(len) ==1 ) %>%
-  ggplot(aes(x=n, group=nFreq, 
-             col=as.factor(nFreq), fill=as.factor(nFreq)))+
-  geom_ribbon(mapping=aes(ymin = q10, ymax=q90), alpha=0.1, lty=2)+
-  geom_line(mapping= aes(y=meandH))+
-  theme_bw()+
-  facet_grid(len~matpar)+
-  scale_x_log10()+
-  scale_y_log10()+
-  xlab("Size of the training sample")+
-  ylab("Integrated square Hellinger distance")+
-  labs(fill = "Number of frequencies",
-       col= "Number of frequencies")+
-  theme(legend.direction = "horizontal", legend.position = "bottom")
-ggsave(paste0("./Figures/benchmarkTooSmall",  ".pdf"), width=10, height=4)
-
-```
-Indeed, with such low lengthscale, the model struggles to share information across different regions, the predictive uncertainty remains high even as the amount of data increases. This is reflected in the Integrated Hellinger distance, which does not decrease significantly as more observations are incorporated.
-
-For other, more reasonable values of the lengthscales, we observe more satisfying behaviours:
-
-
-```{r PlotOtherLen, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H"}
-
-df_res_plot %>%
-  filter(as.numeric(len) !=1 ) %>%
-  ggplot(aes(x=n, group=nFreq, 
-             col=as.factor(nFreq), fill=as.factor(nFreq)))+
-  geom_ribbon(mapping=aes(ymin = q10, ymax=q90), alpha=0.1, lty=2)+
-  geom_line(mapping= aes(y=meandH))+
-  theme_bw()+
-  facet_grid(len~matpar)+
-  scale_x_log10()+
-  scale_y_log10()+
-  xlab("Size of the training sample")+
-  ylab("Integrated square Hellinger distance")+
-  labs(fill = "Number of frequencies",
-       col= "Number of frequencies")+
-  theme(legend.direction = "horizontal", legend.position = "bottom")
-ggsave(paste0("./Figures/benchmark1",  ".pdf"), width=10, height=8)
 
 ```
 
+## Impact of the number of basis functions
 
+The following figure summarizes the effect of the number of basis functions (nFreq) on the quality of SLGP density estimation. For Scenario 1, we compute several integrated distances between the estimated density and the reference field across a range of training sample sizes. The shaded ribbons represent the 25th to 75th percentile range across multiple repetitions, while the solid line shows the mean value.
 
-```{r PlotOtherLen2, fig.cap = "Integrated square Hellinger distance between reference field and estimated field, when the lengthscale is reasonably small, correct, and reasonably big. (Same results, different scale)", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H"}
+```{r PlotS1, fig.cap = "Effect of the number of basis functions on SLGP density estimation accuracy (Scenario 1).", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+library(forcats)
 
-df_res_plot %>%
-  filter(as.numeric(len) !=1 ) %>%
-  filter(n >=100) %>%
+dx <- 1
+
+df_res %>%
+  filter(Scenario == 1 ) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "lengthscale", 
+                   "Sampling", "time"))%>%
+  pivot_longer(-c("nFreq", "SeedSamples", "age", "n")) %>%
+  # rename facets
+  mutate(name = fct_recode(name,
+                           "Hellinger" = "H",
+                           "Total Variation" = "TV",
+                           "KL True -> Est" = "KL_TE",
+                           "KL Est -> True" = "KL_ET",
+                           "Wasserstein-1" = "W1",
+                           "Kolmogorov–Smirnov" = "KS",
+                           "Cramér–von Mises" = "CvM",
+                           "CvM Symmetric" = "CvMsym"),
+  )%>%
+  group_by(nFreq, SeedSamples, name, n)%>%
+  summarise(value=sum(dx*value), .groups="keep")%>%
+  ungroup()%>%
+  group_by(nFreq, name, n) %>%
+  summarise(meanV=mean(value),
+            q25=quantile(value, probs=0.25),
+            q50=quantile(value, probs=0.5),
+            q75=quantile(value, probs=0.75), .groups="keep")%>%
   ggplot(aes(x=n, group=nFreq, 
              col=as.factor(nFreq), fill=as.factor(nFreq)))+
-  geom_ribbon(mapping=aes(ymin = q10, ymax=q90), alpha=0.1, lty=2)+
-  geom_line(mapping= aes(y=meandH))+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, lty=2)+
+  geom_line(mapping= aes(y=meanV))+
   theme_bw()+
-  facet_grid(len~matpar)+
-  coord_cartesian(ylim=c(min(df_res$dH), 2))+
+  facet_wrap(name~., scales="free")+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
   scale_x_log10()+
-  scale_y_log10()+
   xlab("Size of the training sample")+
-  ylab("Integrated square Hellinger distance")+
+  ylab("Integrated dissimilarities")+
   labs(fill = "Number of frequencies",
        col= "Number of frequencies")+
   theme(legend.direction = "horizontal", legend.position = "bottom")
-ggsave(paste0("./Figures/benchmark2",  ".pdf"), width=10, height=8)
 
 ```
-Indeed, one notices that higher number of frequencies (i.e. of basis functions) increases the performances of the mode, until the well-specified setting (200 frequencies) is reached. 
 
-As observed qualitatively in the MAP section, models that are too smooth (wrong kernel assumptions and/or wrong lengthscale), struggle to capture fine-scale elements.
+```{r, include=FALSE}
+
+df_res %>%
+  filter(Scenario == 1 ) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "lengthscale", 
+                   "Sampling", "time"))%>%
+  pivot_longer(-c("nFreq", "SeedSamples", "age", "n")) %>%
+  filter(as.character(name) %in% c("KL_ET", "H", "TV", "CvM")) %>%
+  # rename facets
+  mutate(name = fct_recode(name,
+                           "Hellinger" = "H",
+                           "Total Variation" = "TV",
+                           "KL True -> Est" = "KL_TE",
+                           "Kullback-Liebler (pred, ref)" = "KL_ET",
+                           "Wasserstein-1" = "W1",
+                           "Kolmogorov–Smirnov" = "KS",
+                           "Cramér–von Mises" = "CvM",
+                           "CvM Symmetric" = "CvMsym"),
+  )%>%
+  group_by(nFreq, SeedSamples, name, n)%>%
+  summarise(value=sum(dx*value), .groups="keep")%>%
+  ungroup()%>%
+  group_by(nFreq, name, n) %>%
+  summarise(meanV=mean(value),
+            q25=quantile(value, probs=0.25),
+            q50=quantile(value, probs=0.5),
+            q75=quantile(value, probs=0.75), .groups="keep")%>%
+  ggplot(aes(x=n, group=nFreq, 
+             col=as.factor(nFreq), fill=as.factor(nFreq)))+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, lty=2)+
+  geom_line(mapping= aes(y=meanV))+
+  theme_bw()+
+  facet_wrap(name~., scales="free", ncol=4)+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  scale_x_log10()+
+  xlab("Size of the training sample")+
+  ylab("Integrated dissimilarities")+
+  labs(fill = "Number of frequencies",
+       col= "Number of frequencies")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
+
+ggsave(paste0("./Figures/benchmarkS1",  ".pdf"), width=10, height=3.5)
+
+```
+
+As expected, increasing the number of Random Fourier Features improves the accuracy of the estimation. As we increase nFreq, the estimates converge: beyond a certain threshold (e.g., nFreq = 200, the well-specified setting), additional basis functions provide negligible improvements.
+
+Interestingly, while the Kullback–Leibler divergence and Cramér–von Mises distance show rapid convergence toward zero, other metrics such as the Hellinger distance, Total Variation distance, Wasserstein-1 distance, and Kolmogorov–Smirnov distance improve more gradually, highlighting differences in sensitivity between the considered dissimilarity measures. Specifically, KL and CvM are known to be more sensitive to overall distributional differences, particularly in the bulk of the distribution, whereas Hellinger, TV, and Wasserstein-1 capture local discrepancies and shape variations more finely, which shows here.
+
+## Impact of the length-scale selection
+
+We investigate the impact of length-scale selection on the quality of SLGP density estimation. In this experiment, we use a uniformly sampled design and keep the number of basis functions fixed at 200, consistent with the reference field. We then vary the sample size and evaluate the effect of different length-scale hyperparameters on the integrated distributional dissimilarities.
+
+```{r PlotS2, fig.cap = "Effect of the length-scale specification on SLGP density estimation accuracy (Scenario 2).", fig.fullwidth=TRUE, fig.height=8, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+df_res %>%
+  filter(Scenario == 2 ) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "Sampling", "time"))%>%
+  pivot_longer(-c("lengthscale", "SeedSamples", "age", "n"))%>%
+  mutate(name = fct_recode(name,
+                           "Hellinger" = "H",
+                           "Total Variation" = "TV",
+                           "KL True -> Est" = "KL_TE",
+                           "KL Est -> True" = "KL_ET",
+                           "Wasserstein-1" = "W1",
+                           "Kolmogorov–Smirnov" = "KS",
+                           "Cramér–von Mises" = "CvM",
+                           "CvM Symmetric" = "CvMsym"))%>%
+  group_by(lengthscale, SeedSamples, name, n)%>%
+  summarise(value=sum(dx*value), .groups="keep")%>%
+  ungroup()%>%
+  group_by(lengthscale, name, n) %>%
+  summarise(meanV=mean(value),
+            q25=quantile(value, probs=0.25),
+            q75=quantile(value, probs=0.75), .groups="keep")%>%
+  ggplot(aes(x=n, group=lengthscale, 
+             col=as.factor(lengthscale), fill=as.factor(lengthscale)))+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, lty=2)+
+  geom_line(mapping= aes(y=meanV))+
+  theme_bw()+
+  facet_wrap(name~., scales="free")+
+  scale_x_log10()+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  xlab("Size of the training sample")+
+  ylab("Integrated dissimilarities")+
+  labs(fill = "lengthscales",
+       col= "lengthscales")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
+
+```
+
+
+```{r, include=FALSE}
+
+
+df_res %>%
+  filter(Scenario == 2 ) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "Sampling", "time"))%>%
+  pivot_longer(-c("lengthscale", "SeedSamples", "age", "n"))%>%
+  filter(as.character(name) %in% c("KL_ET", "H", "TV", "CvM")) %>%
+  # rename facets
+  mutate(name = fct_recode(name,
+                           "Hellinger" = "H",
+                           "Total Variation" = "TV",
+                           "KL True -> Est" = "KL_TE",
+                           "Kullback-Liebler (pred, ref)" = "KL_ET",
+                           "Wasserstein-1" = "W1",
+                           "Kolmogorov–Smirnov" = "KS",
+                           "Cramér–von Mises" = "CvM",
+                           "CvM Symmetric" = "CvMsym"),
+  )%>%
+  group_by(lengthscale, SeedSamples, name, n)%>%
+  summarise(value=sum(dx*value), .groups="keep")%>%
+  ungroup()%>%
+  group_by(lengthscale, name, n) %>%
+  summarise(meanV=mean(value),
+            q25=quantile(value, probs=0.25),
+            q75=quantile(value, probs=0.75), .groups="keep")%>%
+  ggplot(aes(x=n, group=lengthscale, 
+             col=as.factor(lengthscale), fill=as.factor(lengthscale)))+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, lty=2)+
+  geom_line(mapping= aes(y=meanV))+
+  theme_bw()+
+  facet_wrap(name~., scales="free", ncol=4)+
+  scale_x_log10()+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  xlab("Size of the training sample")+
+  ylab("Integrated dissimilarities")+
+  labs(fill = "lengthscales",
+       col= "lengthscales")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
+
+ggsave(paste0("./Figures/benchmarkS2",  ".pdf"), width=10, height=3.5)
+
+```
+As expected, the best performance across all dissimilarities is achieved using the true lengthscale or values close to it. Deviations from this value lead to slower convergence, with lengthscales that are too small performing worst. This behavior arises because small lengthscales reduce the model’s ability to generalise, resulting in overly localized predictions that fail to capture broader trends in the data.
+
+These results align with our previous observations when experimenting with small and large length-scales, confirming that selecting a reasonable, data-informed length-scale is crucial for reliable SLGP estimation.
+
+## Effect of the sampling scheme
+
+
+In this experiment, we study how the choice of sampling strategy for `age` impacts the quality of field reconstruction.  
+Unlike the previous analysis, here we look at localised errors as well as integrated ones: instead of summarising performance across the entire domain, we also examine how the estimation error varies as a function of the location in . This setting highlights whether some regions are systematically poorly estimated under certain sampling designs.
+
+We consider the following sampling schemes:
+
+* Very Sparse Grid: Points sampled uniformly on $\{0, 25, 50, 75, 100\}$.
+
+* Medium Grid: Points sampled uniformly on $\{0, 10, 20, \ldots, 100\}$.
+
+* Fine Grid: Points sampled uniformly on $\{0, 5, 10, \ldots, 100\}$.
+
+* Uniform : Points sampled uniformly at random on $[0, 100]$.
+
+* Uniform with holes: Points sampled uniformly within $[0,10] \cup [20,60] \cup [80,100]$.
+
+For all scenarios, we use 200 basis functions and a well-specified length-scale, consistent with the reference setting. By comparing the estimated densities across these designs, we can assess the effect of sample coverage and spacing on the accuracy of SLGP predictions.
+
+```{r PlotS3a, fig.cap = "Effect of the sampling localisation on SLGP density estimation accuracy (Scenario 3, Kullback-Liebler divergence).", fig.fullwidth=TRUE, fig.height=12, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+temp <- df_res %>%
+  filter(Scenario == 3 ) %>%
+  filter(n %in% c(100, 500, 5000, 50000)) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "lengthscale", "time"))%>%
+  pivot_longer(-c("SeedSamples", "age", "n", "Sampling"))%>%
+  filter(name == "KL_TE" ) %>%
+  group_by(name, n, age, Sampling) %>%
+  summarise(meanV=mean(value),
+            q75=quantile(value, probs=0.75),
+            q50=quantile(value, probs=0.5),
+            q25=quantile(value, probs=0.25), .groups="keep")%>%
+  ungroup()%>%
+  # rename facets
+  mutate(name = "Kullback-Liebler (pred, ref)",
+         Sampling = fct_recode(Sampling,
+                               "Uniform" = "Unif",
+                               "Uniform with holes" = "Hole-y",
+                               "Unif. on regular grid with 21pts" = "Clustered",
+                               "Unif. on regular grid with 11pts" = "Clustered2",
+                               "Unif. on regular grid with 05pts" = "Clustered3"),
+  )%>%
+  data.frame()
+temp2 <- temp %>%
+  group_by(name) %>%
+  summarise(ymin = 0,
+            ymax = max(q75),
+            Sampling = "Uniform with holes", .groups="keep")%>%
+  data.frame()
+
+ggplot(temp, aes(x=age))+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, 
+              lty=2, fill="cornflowerblue", col="navy")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 10, xmax = 20, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 60, xmax = 80, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 05pts",
+                               age = seq(range_x[1], range_x[2],, 5)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 11pts",
+                               age = seq(range_x[1], range_x[2],, 11)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 21pts",
+                               age = seq(range_x[1], range_x[2],, 21)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_line(mapping= aes(y=meanV), col="navy")+
+  theme_bw()+
+  facet_grid(Sampling~paste0("Sample size: ", n))+
+  ylab("Kullback-Liebler divergence")+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  theme(legend.direction = "horizontal", legend.position = "bottom",
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank())
+
+ggsave(paste0("./Figures/benchmarkS3localKL",  ".pdf"), width=10, height=10)
+
+```
+
+```{r PlotS3b, fig.cap = "Effect of the sampling localisation on SLGP density estimation accuracy (Scenario 3, Hellinger distance).", fig.fullwidth=TRUE, fig.height=12, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+temp <- df_res %>%
+  filter(Scenario == 3 ) %>%
+  filter(n %in% c(100, 500, 5000, 50000)) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "lengthscale", "time"))%>%
+  pivot_longer(-c("SeedSamples", "age", "n", "Sampling"))%>%
+  filter(name == "H" ) %>%
+  group_by(name, n, age, Sampling) %>%
+  summarise(meanV=mean(value),
+            q75=quantile(value, probs=0.75),
+            q50=quantile(value, probs=0.5),
+            q25=quantile(value, probs=0.25), .groups="keep")%>%
+  ungroup()%>%
+  # rename facets
+  mutate(name = "Hellinger",
+         Sampling = fct_recode(Sampling,
+                               "Uniform" = "Unif",
+                               "Uniform with holes" = "Hole-y",
+                               "Unif. on regular grid with 21pts" = "Clustered",
+                               "Unif. on regular grid with 11pts" = "Clustered2",
+                               "Unif. on regular grid with 05pts" = "Clustered3"),
+  )%>%
+  data.frame()
+temp2 <- temp %>%
+  group_by(name) %>%
+  summarise(ymin = 0,
+            ymax = max(q75),
+            Sampling = "Uniform with holes", .groups="keep")%>%
+  data.frame()
+
+ggplot(temp, aes(x=age))+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, 
+              lty=2, fill="cornflowerblue", col="navy")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 10, xmax = 20, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 60, xmax = 80, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 05pts",
+                               age = seq(range_x[1], range_x[2],, 5)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 11pts",
+                               age = seq(range_x[1], range_x[2],, 11)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 21pts",
+                               age = seq(range_x[1], range_x[2],, 21)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_line(mapping= aes(y=meanV), col="navy")+
+  theme_bw()+
+  facet_grid(Sampling~paste0("Sample size: ", n))+
+  ylab("Hellinger distance")+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  theme(legend.direction = "horizontal", legend.position = "bottom",
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank())
+
+ggsave(paste0("./Figures/benchmarkS3localH",  ".pdf"), width=10, height=10)
+
+```
+
+
+```{r PlotS3c, fig.cap = "Effect of the sampling localisation on SLGP density estimation accuracy (Scenario 3, Cramer-von-Mises).", fig.fullwidth=TRUE, fig.height=12, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+temp <- df_res %>%
+  filter(Scenario == 3 ) %>%
+  filter(n %in% c(100, 500, 5000, 50000)) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "lengthscale", "time"))%>%
+  pivot_longer(-c("SeedSamples", "age", "n", "Sampling"))%>%
+  filter(name == "CvM" ) %>%
+  group_by(name, n, age, Sampling) %>%
+  summarise(meanV=mean(value),
+            q75=quantile(value, probs=0.75),
+            q50=quantile(value, probs=0.5),
+            q25=quantile(value, probs=0.25), .groups="keep")%>%
+  ungroup()%>%
+  # rename facets
+  mutate(name = "Cramér–von Mises",
+         Sampling = fct_recode(Sampling,
+                               "Uniform" = "Unif",
+                               "Uniform with holes" = "Hole-y",
+                               "Unif. on regular grid with 21pts" = "Clustered",
+                               "Unif. on regular grid with 11pts" = "Clustered2",
+                               "Unif. on regular grid with 05pts" = "Clustered3"),
+  )%>%
+  data.frame()
+temp2 <- temp %>%
+  group_by(name) %>%
+  summarise(ymin = 0,
+            ymax = max(q75),
+            Sampling = "Uniform with holes", .groups="keep")%>%
+  data.frame()
+
+ggplot(temp, aes(x=age))+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, 
+              lty=2, fill="cornflowerblue", col="navy")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 10, xmax = 20, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 60, xmax = 80, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 05pts",
+                               age = seq(range_x[1], range_x[2],, 5)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 11pts",
+                               age = seq(range_x[1], range_x[2],, 11)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 21pts",
+                               age = seq(range_x[1], range_x[2],, 21)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_line(mapping= aes(y=meanV), col="navy")+
+  theme_bw()+
+  facet_grid(Sampling~paste0("Sample size: ", n))+
+  ylab("Cramér–von Mises value")+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  theme(legend.direction = "horizontal", legend.position = "bottom",
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank())
+
+ggsave(paste0("./Figures/benchmarkS3localCvM",  ".pdf"), width=10, height=10)
+
+```
+
+
+```{r PlotS3d, fig.cap = "Effect of the sampling localisation on SLGP density estimation accuracy (Scenario 3, Total Variation distance).", fig.fullwidth=TRUE, fig.height=12, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+temp <- df_res %>%
+  filter(Scenario == 3 ) %>%
+  filter(n %in% c(100, 500, 5000, 50000)) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "lengthscale", "time"))%>%
+  pivot_longer(-c("SeedSamples", "age", "n", "Sampling"))%>%
+  filter(name == "TV" ) %>%
+  group_by(name, n, age, Sampling) %>%
+  summarise(meanV=mean(value),
+            q75=quantile(value, probs=0.75),
+            q50=quantile(value, probs=0.5),
+            q25=quantile(value, probs=0.25), .groups="keep")%>%
+  ungroup()%>%
+  # rename facets
+  mutate(name = "Total Variation",
+         Sampling = fct_recode(Sampling,
+                               "Uniform" = "Unif",
+                               "Uniform with holes" = "Hole-y",
+                               "Unif. on regular grid with 21pts" = "Clustered",
+                               "Unif. on regular grid with 11pts" = "Clustered2",
+                               "Unif. on regular grid with 05pts" = "Clustered3"),
+  )%>%
+  data.frame()
+temp2 <- temp %>%
+  group_by(name) %>%
+  summarise(ymin = 0,
+            ymax = max(q75),
+            Sampling = "Uniform with holes", .groups="keep")%>%
+  data.frame()
+
+ggplot(temp, aes(x=age))+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, 
+              lty=2, fill="cornflowerblue", col="navy")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 10, xmax = 20, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_rect(data = temp2,
+            mapping = aes(xmin = 60, xmax = 80, ymin = ymin, ymax = ymax),
+            alpha = 0.2, fill = "grey", inherit.aes = FALSE,
+            lty=2, col = "darkgrey")+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 05pts",
+                               age = seq(range_x[1], range_x[2],, 5)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 11pts",
+                               age = seq(range_x[1], range_x[2],, 11)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_vline(data = data.frame(Sampling="Unif. on regular grid with 21pts",
+                               age = seq(range_x[1], range_x[2],, 21)),
+             mapping = aes(xintercept = age),
+             lty=2, col = "darkgrey")+
+  geom_line(mapping= aes(y=meanV), col="navy")+
+  theme_bw()+
+  facet_grid(Sampling~paste0("Sample size: ", n))+
+  ylab("Total Variation distance")+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  theme(legend.direction = "horizontal", legend.position = "bottom",
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank())
+
+ggsave(paste0("./Figures/benchmarkS3localTV",  ".pdf"), width=10, height=10)
+
+```
+
+As expected, sampling strategies with gaps in the `age` space (such as the Uniform with holes and the Very Sparse Grid) lead to worse local performance in the poorly sampled regions. In these areas, the SLGP is unable to generalise, producing higher estimation errors. 
+
+For the Very Sparse Grid, increasing the number of training points does not improve the estimation beyond a certain threshold due to the limited coverage of the domain. To facilitate comparison, we also provide a figure excluding this design, allowing the other sampling strategies to be visualized on a sensible scale.
+
+We also look at the integrated dissimilarities with varying sample sizes.
+
+```{r PlotS3again, fig.cap = "Effect of the sampling localisation on SLGP density estimation accuracy (Scenario 3).", fig.fullwidth=TRUE, fig.height=4, fig.width=10, fig.align='center',fig.pos="H", echo=FALSE}
+
+df_res %>%
+  filter(Scenario == 3 ) %>%
+  dplyr::select(-c("Scenario", "SeedFreq", "nFreq", "lengthscale", "time"))%>%
+  pivot_longer(-c("Sampling", "SeedSamples", "age", "n"))%>%
+  filter(as.character(name) %in% c("KL_ET", "H", "TV", "CvM")) %>%
+  mutate(name = fct_recode(name,
+                           "Hellinger" = "H",
+                           "Total Variation" = "TV",
+                           "KL Est -> True" = "KL_ET",
+                           "Cramér–von Mises" = "CvM"),
+         Sampling = fct_recode(Sampling,
+                               "Uniform" = "Unif",
+                               "Uniform with holes" = "Hole-y",
+                               "Unif. on regular grid with 21pts" = "Clustered",
+                               "Unif. on regular grid with 11pts" = "Clustered2",
+                               "Unif. on regular grid with 05pts" = "Clustered3"),
+  )%>%
+  group_by(Sampling, SeedSamples, name, n)%>%
+  summarise(value=sum(dx*value), .groups="keep")%>%
+  ungroup()%>%
+  group_by(Sampling, name, n) %>%
+  summarise(meanV=mean(value),
+            q25=quantile(value, probs=0.25),
+            q75=quantile(value, probs=0.75), .groups="keep")%>%
+  ggplot(aes(x=n, group=Sampling, 
+             col=as.factor(Sampling), fill=as.factor(Sampling)))+
+  geom_hline(yintercept=0, lty=2, col="black")+
+  geom_ribbon(mapping=aes(ymin = q25, ymax=q75), alpha=0.1, lty=2)+
+  geom_line(mapping= aes(y=meanV))+
+  theme_bw()+
+  facet_wrap(name~., ncol=4, scales="free")+
+  scale_x_log10()+
+  scale_y_continuous(transform = scales::pseudo_log_trans())+
+  xlab("Size of the training sample")+
+  ylab("Integrated dissimilarities")+
+  labs(fill = "lengthscales",
+       col= "lengthscales")+
+  theme(legend.direction = "horizontal", legend.position = "bottom")
+ggsave(paste0("./Figures/benchmarkS3",  ".pdf"), width=10, height=3.5)
+
+```
+
+These results clearly illustrate the impact of localization: dense coverage in some areas does not compensate for missing information elsewhere.
+
+This analysis suggests a practical guideline: if the goal is to learn the full field rather than targeting specific locations, it is preferable to distribute sampling points evenly across the space rather than accumulating them at selected covariates.
+However if the goal is to refind knowledge at prescribed location, intensifying sampling in the area leads to better local predictions.
 
 
 # Using SLGPs for discrete distributions
-Rather than predicting a density, one can adjust the current code to make predictions for discrete distributions.
+
+In addition to modeling continuous densities, our implementation of SLGPs can be adapted to predict discrete distributions.
+
 For that purpose, we use the Boston Housing dataset and propose modeling the distribution of rad (index of accessibility to radial highways, between 1 and 24 where 24 indicates the best accessibility and 1 the worst) as a function of 'AGE' using SLGP. Since rad is an integer-valued variable, our goal is to adjust the implementation for this.
 
 ```{r figureHousingDiscrete, fig.cap = "A visual representation of the dependency of the index of accessibility to radial highways on proportion of owner-occupied units constructed before 1940 in the Boston Housing dataset.", fig.fullwidth=TRUE, fig.height=3.5, fig.width=10, fig.align='center',fig.pos="H"}
