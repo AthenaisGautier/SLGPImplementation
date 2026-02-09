@@ -983,7 +983,8 @@ if(!file.exists("modelMCMC.Rdata")){
   modelMCMC  <- retrainSLGP(SLGPmodel=modelPrior, 
                             newdata = df, 
                             method="MCMC",
-                            opts = list(stan_chains=2, stan_iter=1000))
+                            opts = list(stan_chains=2, stan_iter=1000),
+                            seed=1)
   save(modelMCMC, file="modelMCMC.Rdata")
   
 }else{
@@ -1088,7 +1089,7 @@ ggsave(paste0("./Figures/MomentsMCMC",  ".pdf"), width=8, height=3)
 We also support the joint prediction of quantiles at arbitrary levels. Because quantiles are derived directly from the estimated densities, they are guaranteed to be consistent and non-crossing - a property that cannot always be ensured in standard quantile regression. This makes them reliable tools for summarizing distributional shape (e.g., asymmetry, spread) at each location.
 
 
-```{r SLGPMAPplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPMAPplotQuantiles, fig.cap = "Simultaneous quantile prediction using a SLGP model, with estimation performed by MAP", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H", warning=FALSE, message=FALSE}
 probsL <- c(5, 25, 50, 75, 95)/100
 dfX <- data.frame(age=seq(range_x[1], range_x[2], 1))
 pred <- predictSLGP_quantiles(SLGPmodel=modelMAP,
@@ -1141,7 +1142,7 @@ ggsave(p_with_marginal, file=paste0("./Figures/QuantilesMAP2",  ".pdf"), width=8
 ```
 There is a slight disagreement between both methods for the 95% quantile and $age \geq 75$.
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(scales)
 q1 <- quantile(df$medv[df$age > 75 & df$age <= 80], probs=0.95)
 n1 <- sum(df$age > 75 & df$age <= 80)
@@ -1202,7 +1203,7 @@ ggsave(file=paste0("./Figures/QuantilesMAP3",  ".pdf"), width=8, height=3)
 
 ```
 
-```{r SLGPMCMCplotQuantiles2, fig.cap = "Simultaneous quantile prediction (and associated uncertainty) using a SLGP model, with estimation performed by MCMC", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H"}
+```{r SLGPMCMCplotQuantiles2, fig.cap = "Simultaneous quantile prediction (and associated uncertainty) using a SLGP model, with estimation performed by MCMC", fig.fullwidth=TRUE, fig.height=5, fig.width=10, fig.align='center',fig.pos="H", warning=FALSE, message=FALSE}
 # Define the three selected values
 
 probsL <- c(5, 25, 50, 75, 95)/100
@@ -1269,7 +1270,7 @@ We explore three main experimental factors, and for each setting we replicate th
 * 1. Number of Basis Functions : This experiment evaluates the impact of the number of Random Fourier Features (RFFs). A larger number of basis functions is expected to improve accuracy but increase computational cost.
 This setup allows us to study the approximation error induced by using a finite number of basis functions and assess the trade-off between speed and expressiveness.
 
-*2. Length-scale Misspecification: This experiment, we test the sensitivity of SLGP estimation to various specification of the length-scale hyperparameter. We train models using different length-scales. We consider length-scale that are too small: 0.01, 0.05; well-specified: 0.15; or too large: 0.25, 0.5.
+* 2. Length-scale Misspecification: This experiment, we test the sensitivity of SLGP estimation to various specification of the length-scale hyperparameter. We train models using different length-scales. We consider length-scale that are too small: 0.01, 0.05; well-specified: 0.15; or too large: 0.25, 0.5.
 This analysis highlights the consequences of hyper-parameter selection.
 
 * 3. Sampling Schemes (Experiment 3)
@@ -1313,12 +1314,18 @@ config <- config[, c("Scenario", "Sampling", "SeedSamples",
 For each tested configuration, we compute the estimation error, comparing the inferred density field to the reference field. This allows us to measure the effect of different modeling choices.To assess the similarity between estimated and true distributions, we compute several integrated distances based on both the probability density functions (PDFs) and the cumulative distribution functions (CDFs). 
 
 The considered distances are defined for a distribution $P_1$ that admits a pdf $f_1$ and cdf $F_1$ and a distribution $P_2$ that admits a pdf $f_2$ and cdf $F_2$ as:
+
 * Hellinger Distance $d_H(f_1, f_2) = \sqrt{\frac{1}{2} \int \left( \sqrt{f_1(t)} - \sqrt{f_2(t)} \right)^2 dt}$
+
 * Total Variation Distance $TV(f_1, f_2) = \frac{1}{2} \int \left| f_1(t) - f_2(t) \right| \,dt$
-* Kullback–Leibler Divergence $KL(f_1, f_2) = \int f_1(t) \log \left( \frac{f_1(t)}{f_2(t)} \right) dt $
+
+* Kullback–Leibler Divergence $KL(f_1, f_2) = \int f_1(t) \log \left( \frac{f_1(t)}{f_2(t)} \right) dt$
+
 * Wasserstein-1 Distance $W_1(F_1, F_2) = \int \left| F_1(t) - F_2(t) \right| dt$
+
 * Kolmogorov–Smirnov Distance: $KS(F_1, F_2) = \sup_t \left| F_1(t) - F_2(t) \right|$
-* Cramér–von Mises Distance:  $CvM(F_1, F_2) = \int \left( F_1(t) - F_2(t) \right)^2 f_1(t) \, dt$ for the $P_1$-weighted version
+
+* Cramér–von Mises Distance:  $CvM(F_1, F_2) = \int \left( F_1(t) - F_2(t) \right)^2 f_1(t) \, dt$ for the $f_1$-weighted version
 $CvM_{\text{sym}}(F_1, F_2) = \int \left( F_1(t) - F_2(t) \right)^2 dt$ for the unweighted version.
 
 These metrics are evaluated across a grid of values and provide different perspectives on the quality of the density estimation.
@@ -1478,7 +1485,8 @@ for(i in seq(nrow(config))){
         df_compute$estCDF <- predTempCDF$cdf_1
         
         ggplot(df_compute, mapping=aes(x=age, y=medv, fill=TruePDF-estPDF))+
-          geom_raster()+theme_bw()+scale_fill_viridis(limits = c(-0.12, 0.12))+        labs(fill="pdf")
+          geom_raster()+theme_bw()+scale_fill_viridis(limits = c(-0.12, 0.12))+        
+          labs(fill="pdf")
         
         distances <- df_compute %>%
           group_by(age)%>%
@@ -1516,7 +1524,7 @@ close(pb)
 ```
 
 
-Finally, we combine all results into a single data frame, which is then ready for downstream analysis and visualization.
+Finally, we combine all results into a single data frame, which is then ready for further analysis and visualization.
 
 ```{r}
 df_res <- data.frame()
